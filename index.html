@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Préparation Dan – Judo FFJDA 2026/2027</title>
+<title>Préparation au Passage de Grade – Judo FFJDA 2026/2027</title>
 <style>
 /* ============================================================
-   Préparation Dan – habillage « glass », mobile d'abord
+   Préparation au Passage de Grade – habillage « glass », mobile d'abord
    Charte conservée : rouge (#CF290A) + vert validation, fond sombre
    ============================================================ */
 :root{
@@ -64,7 +64,8 @@ a{color:inherit}
   border:1px solid rgba(255,255,255,.12);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.14);
 }
-.brand h1{font-size:.95rem;font-weight:700;letter-spacing:-.015em;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand>div{min-width:0}
+.brand h1{font-size:1.1rem;font-weight:700;letter-spacing:-.015em;line-height:1.2;white-space:normal;overflow-wrap:break-word;text-wrap:balance}
 .brand p{font-size:.65rem;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tools{margin-left:auto;display:flex;gap:.3rem;flex:none}
 .tool{
@@ -74,6 +75,7 @@ a{color:inherit}
   transition:color .18s,background .18s,border-color .18s,transform .18s;
 }
 .tool svg{width:14px;height:14px;flex:none;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tool .lbl{display:none}
 .tool:hover{color:var(--accent-text);border-color:rgba(207,41,10,.38);background:rgba(255,255,255,.12)}
 .tool:active{transform:scale(.97)}
 
@@ -140,7 +142,7 @@ nav.tabs label .ic{font-size:1.02rem;line-height:1;filter:grayscale(.35);opacity
 
 /* ---------- Champs ---------- */
 input[type="date"],input[type="number"],input[type="text"],select,textarea{
-  width:100%;font-family:inherit;font-size:.8rem;color:var(--text);
+  width:100%;min-width:0;max-width:100%;font-family:inherit;font-size:.8rem;color:var(--text);
   background:rgba(255,255,255,.055);border:1px solid var(--border);border-radius:12px;
   padding:.5rem .6rem;min-height:40px;
   transition:border-color .16s,box-shadow .16s,background .16s;
@@ -198,8 +200,8 @@ body:has(#c-nage:checked) #sub-nage{display:flex}
 body:has(#c-ne:checked) #sub-ne{display:flex}
 
 /* ---------- Dates ---------- */
-.date-box{margin:0 0 .6rem;padding:.7rem .8rem;display:grid;gap:.5rem;font-size:.78rem}
-.date-box label{display:flex;flex-direction:column;gap:.25rem;font-size:.61rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint)}
+.date-box{margin:0 0 .6rem;padding:.7rem .8rem;display:grid;gap:.5rem;font-size:.78rem;min-width:0}
+.date-box label{display:flex;flex-direction:column;gap:.25rem;min-width:0;font-size:.61rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint)}
 .date-box label:has(input[type="checkbox"]){flex-direction:row;align-items:center;gap:.5rem;text-transform:none;letter-spacing:0;font-size:.78rem;font-weight:500;color:var(--text)}
 
 /* ---------- Déroulé UV2 ---------- */
@@ -305,7 +307,7 @@ body:has(#tg-all:checked) #uv2-all{display:block}
   font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);
   background:rgba(255,255,255,.04);border-bottom:1px solid var(--border);
 }
-.shiai-table td{padding:.45rem .5rem;border-bottom:1px solid rgba(255,255,255,.06);font-size:.78rem;vertical-align:middle}
+.shiai-table td{padding:.45rem .5rem;min-width:0;border-bottom:1px solid rgba(255,255,255,.06);font-size:.78rem;vertical-align:middle}
 .shiai-table tr:last-child td{border-bottom:0}
 .shiai-table tr.row-ok td{background:rgba(74,222,128,.09)}
 .shiai-table tr.row-ok td:first-child{box-shadow:inset 3px 0 0 var(--green)}
@@ -356,8 +358,8 @@ body:has(#dan-1:checked) #kataNageVideo,body:has(#dan-2:checked) #kataNageVideo,
 .cond-box{margin:0 0 .6rem;padding:.85rem}
 .cond-box h3{font-size:.8rem;font-weight:700;margin-bottom:.5rem}
 .cond-grid{display:grid;gap:.65rem}
-.cond-inputs{display:grid;gap:.5rem}
-.cond-inputs label{display:flex;flex-direction:column;gap:.25rem;font-size:.61rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint)}
+.cond-inputs{display:grid;gap:.5rem;min-width:0}
+.cond-inputs label{display:flex;flex-direction:column;gap:.25rem;min-width:0;font-size:.61rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint)}
 .cond-results{
   background:rgba(74,222,128,.09);border:1px solid rgba(74,222,128,.24);
   border-radius:16px;padding:.8rem .85rem;font-size:.77rem;color:#cfe9d8;
@@ -436,7 +438,7 @@ body:has(#dan-4:checked) .kata-card:not([data-kgrade="4"]){display:none}
   .shiai-table thead{display:none}
   .shiai-table tbody,.shiai-table tr,.shiai-table td{display:block;width:100%}
   .shiai-table tr{
-    position:relative;display:grid;grid-template-columns:1fr 1fr;gap:.5rem;
+    position:relative;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:.5rem;
     grid-template-areas:"date pts" "lieu lieu" "note note";
     padding:.65rem .7rem 1.5rem;margin-bottom:.5rem;
     border-radius:16px;background:rgba(255,255,255,.055);
@@ -460,9 +462,8 @@ body:has(#dan-4:checked) .kata-card:not([data-kgrade="4"]){display:none}
   .shiai-threshold{margin-left:0;width:100%;text-align:left}
 }
 @media (max-width:359px){
-  .tool .lbl{display:none}
   .tool{padding:.46rem}
-  .brand h1{font-size:.9rem}
+  .brand h1{font-size:1rem}
   .container{padding:0 .7rem}
 }
 
@@ -492,7 +493,7 @@ body:has(#dan-4:checked) .kata-card:not([data-kgrade="4"]){display:none}
   .video-box{max-width:none}
   .filters-row strong{width:auto;margin:0 .3rem 0 0}
   .cond-grid{grid-template-columns:1fr}
-  .cond-inputs{grid-template-columns:1fr 1fr;gap:.55rem .9rem}
+  .cond-inputs{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.55rem .9rem}
   .cond-results{order:-1}
   .commission-fields{grid-template-columns:auto 1fr auto;align-items:end}
   .shiai-table-wrap{background:var(--card);-webkit-backdrop-filter:var(--glass);backdrop-filter:var(--glass);border:1px solid var(--hair);box-shadow:var(--shadow)}
@@ -514,7 +515,7 @@ body:has(#dan-4:checked) .kata-card:not([data-kgrade="4"]){display:none}
 <meta name="theme-color" content="#0b0b0f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Judo Dan">
+<meta name="apple-mobile-web-app-title" content="Passage de Grade">
 <link rel="apple-touch-icon" href="icon-180.png">
 <script>
 if('serviceWorker' in navigator){ window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
@@ -526,7 +527,7 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
 <div class="brand">
 <span class="mark">🥋</span>
 <div>
-<h1>Préparation Dan</h1>
+<h1>Préparation au Passage de Grade</h1>
 <p>Judo FFJDA · Textes 2026/2027</p>
 </div>
 </div>
@@ -593,11 +594,6 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
 <small>Source : Textes Officiels 2026/2027 – Art. 3.3.</small>
 </details>
 
-<div class="date-box">
-<label>Date de validation UV1 : <input type="date" id="kataDate"></label>
-<label><input type="checkbox" id="exempt40Kata"> J'ai 40 ans et plus (Dispensé du rôle de Uke)</label>
-</div>
-
 <div class="filters-row">
 <strong>Grade :</strong>
 <input type="radio" name="globalDan" id="dan-all" checked class="global-grade"><label for="dan-all">Tous</label>
@@ -628,6 +624,11 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
 <!-- 4e DAN -->
 <article class="kata-card" data-kgrade="4"><div class="kata-head"><div><span class="badge dan4">4e Dan</span><h3>Ju-no-Kata</h3><p class="sub">Intégralité – rôle <strong>Tori</strong> uniquement</p></div><input type="checkbox" class="kata-track" data-id="4-jnk-tori"></div></article>
 </div>
+
+<div class="date-box">
+<label>Date de validation UV1 : <input type="date" id="kataDate"></label>
+<label><input type="checkbox" id="exempt40Kata"> J'ai 40 ans et plus (Dispensé du rôle de Uke)</label>
+</div>
 </div>
 
 <!-- ============================ UV2 TECHNIQUE ============================ -->
@@ -637,10 +638,6 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
 <p>Le candidat démontre des techniques de <em>Nage-waza</em> et <em>Ne-waza</em>.</p>
 <small>Source : Textes Officiels 2026/2027 – Art. 3.3.</small>
 </details>
-
-<div class="date-box">
-<label>Date de validation UV2 : <input type="date" id="techDate"></label>
-</div>
 
 <section class="filters">
 <fieldset>
@@ -698,14 +695,6 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
 <ul><li><strong>Epreuve 1</strong> : Go-no-Sen (exercice de contre prise) en Tori.</li><li><strong>Epreuve 2</strong> : Tokui-waza Nage-waza (opportunités, séquences tactiques, liaisons debout-sol). Durée : 3 min.</li><li><strong>Epreuve 3</strong> : Tokui-waza Ne-waza. Durée : 2 min.</li></ul>
 </div>
 </details>
-
-<div class="progress-container">
-<div class="progress-header">
-<h3>📈 Suivi de la maîtrise UV2</h3>
-<span class="progress-text" id="progressText">0 / 0 techniques validées</span>
-</div>
-<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-</div>
 
 <div class="grid" id="grid">
 <!-- 1er DAN - NAGE -->
@@ -811,6 +800,18 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
 <article class="card" data-grade="3" data-cat="ne" data-fam="kansetsu"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Ude-hishigi-hara-gatame</h3><p class="sub">Kansetsu-waza</p></div><input type="checkbox" class="track" data-id="3-ude-hishigi-hara-gatame"></div></article>
 </div>
 <p class="empty-hint" id="techEmpty" aria-live="polite" style="display:none">Aucune technique ne correspond à ces filtres.</p>
+
+<div class="progress-container">
+<div class="progress-header">
+<h3>📈 Suivi de la maîtrise UV2</h3>
+<span class="progress-text" id="progressText">0 / 0 techniques validées</span>
+</div>
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<div class="date-box">
+<label>Date de validation UV2 : <input type="date" id="techDate"></label>
+</div>
 </div>
 
 <!-- ============================ UV3 SHIAI ============================ -->
@@ -821,12 +822,6 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
 <p class="rule-combi">Option <strong>Efficacité combinée</strong> : <strong>partie A = 20 points attendus</strong> (points de compétition), plus la <strong>partie B</strong> à valider séparément.</p>
 <p>Barème sportif : victoire par <strong>ippon = 10 points</strong> ; victoire par <strong>waza-ari = 7 points</strong>.</p>
 </details>
-
-<div class="shiai-total">
-<span class="shiai-label">Total cumulé</span>
-<span class="shiai-score"><strong id="shiaiTotalValue">0</strong><span class="unit">points</span></span>
-<span class="shiai-threshold" id="shiaiThreshold"></span>
-</div>
 
 <div class="uv3-mode">
 <strong>Option d'efficacité :</strong>
@@ -864,6 +859,12 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
 <tr><td><input type="date" data-f="date" value=""></td><td><input type="text" data-f="lieu" value="" placeholder="Shiai / test efficacité…"></td><td><input type="number" min="0" step="1" data-f="pts" value="0"></td><td><input type="text" data-f="note" value="" placeholder=""></td><td><button class="del-row" title="Supprimer">×</button></td></tr>
 </tbody>
 </table>
+</div>
+
+<div class="shiai-total">
+<span class="shiai-label">Total cumulé</span>
+<span class="shiai-score"><strong id="shiaiTotalValue">0</strong><span class="unit">points</span></span>
+<span class="shiai-threshold" id="shiaiThreshold"></span>
 </div>
 </div>
 
