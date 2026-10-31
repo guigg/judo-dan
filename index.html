@@ -156,6 +156,15 @@ select{
   background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a6a6b2' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right .6rem center;
 }
+/* iOS/WebKit : les champs date conservent sinon leur largeur native et débordent. */
+@supports (-webkit-touch-callout:none){
+  input[type="date"]{
+    -webkit-appearance:none;appearance:none;
+    display:block;width:100%;max-width:100%;min-width:0;
+    text-align:left;
+  }
+  input[type="date"]::-webkit-date-and-time-value{text-align:left}
+}
 input[type="checkbox"]{
   -webkit-appearance:none;appearance:none;
   width:24px;height:24px;flex:none;display:inline-grid;place-content:center;
@@ -201,7 +210,8 @@ body:has(#c-ne:checked) #sub-ne{display:flex}
 
 /* ---------- Dates ---------- */
 .date-box{margin:0 0 .6rem;padding:.7rem .8rem;display:grid;gap:.5rem;font-size:.78rem;min-width:0}
-.date-box label{display:flex;flex-direction:column;gap:.25rem;min-width:0;font-size:.61rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint)}
+.date-box label{display:flex;flex-direction:column;gap:.25rem;min-width:0;overflow:hidden;font-size:.61rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint)}
+.date-box label:has(input[type="checkbox"]){overflow:visible}
 .date-box label:has(input[type="checkbox"]){flex-direction:row;align-items:center;gap:.5rem;text-transform:none;letter-spacing:0;font-size:.78rem;font-weight:500;color:var(--text)}
 
 /* ---------- Déroulé UV2 ---------- */
@@ -312,7 +322,7 @@ body:has(#tg-all:checked) #uv2-all{display:block}
 }
 .shiai-row .f{display:grid;gap:.2rem;min-width:0}
 .shiai-row .f>span{font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint)}
-.shiai-row .f-date{grid-area:date}
+.shiai-row .f-date{grid-area:date;overflow:hidden}
 .shiai-row .f-pts{grid-area:pts}
 .shiai-row .f-lieu{grid-area:lieu}
 .shiai-row .f-note{grid-area:note}
@@ -364,7 +374,7 @@ body:has(#dan-1:checked) #kataNageVideo,body:has(#dan-2:checked) #kataNageVideo,
 .cond-box h3{font-size:.8rem;font-weight:700;margin-bottom:.5rem}
 .cond-grid{display:grid;gap:.65rem}
 .cond-inputs{display:grid;gap:.5rem;min-width:0}
-.cond-inputs label{display:flex;flex-direction:column;gap:.25rem;min-width:0;font-size:.61rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint)}
+.cond-inputs label{display:flex;flex-direction:column;gap:.25rem;min-width:0;overflow:hidden;font-size:.61rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint)}
 .cond-results{
   background:rgba(74,222,128,.09);border:1px solid rgba(74,222,128,.24);
   border-radius:16px;padding:.8rem .85rem;font-size:.77rem;color:#cfe9d8;
