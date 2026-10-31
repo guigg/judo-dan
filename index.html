@@ -27,7 +27,7 @@
   --r:20px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%;background:#0b0b0f}
+html{-webkit-text-size-adjust:100%;background:#0b0b0f;overflow-x:hidden}
 body{
   font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;
   font-size:16px;line-height:1.5;color:var(--text);
@@ -300,25 +300,26 @@ body:has(#tg-all:checked) #uv2-all{display:block}
 }
 .btn-add:hover{background:var(--accent-ink)}
 .btn-add:active{transform:scale(.98)}
-.shiai-table-wrap{margin:0 0 .8rem;border-radius:var(--r);overflow:auto}
-.shiai-table{width:100%;border-collapse:separate;border-spacing:0}
-.shiai-table th{
-  padding:.55rem .6rem;text-align:left;
-  font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);
-  background:rgba(255,255,255,.04);border-bottom:1px solid var(--border);
+.shiai-list{display:grid;gap:.5rem;margin:0 0 .3rem}
+.shiai-row{
+  position:relative;display:grid;gap:.5rem;
+  grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);
+  grid-template-areas:"date pts" "lieu lieu" "note note";
+  padding:.7rem .8rem;border-radius:16px;
+  background:rgba(255,255,255,.055);border:1px solid var(--hair);box-shadow:var(--shadow);
+  touch-action:pan-y;
+  transition:transform .18s ease,background .18s,border-color .18s,opacity .2s;
 }
-.shiai-table td{padding:.45rem .5rem;min-width:0;border-bottom:1px solid rgba(255,255,255,.06);font-size:.78rem;vertical-align:middle}
-.shiai-table tr:last-child td{border-bottom:0}
-.shiai-table tr.row-ok td{background:rgba(74,222,128,.09)}
-.shiai-table tr.row-ok td:first-child{box-shadow:inset 3px 0 0 var(--green)}
-.shiai-table input{width:100%;min-height:38px;padding:.4rem .5rem}
-.shiai-table input[type="number"]{max-width:84px}
-.shiai-table button{
-  display:grid;place-items:center;width:30px;height:30px;border-radius:999px;
-  background:rgba(207,41,10,.16);color:var(--accent-text);
-  border:1px solid rgba(207,41,10,.3);font-size:.95rem;line-height:1;cursor:pointer;
-}
-.shiai-table button:hover{background:rgba(207,41,10,.26)}
+.shiai-row .f{display:grid;gap:.2rem;min-width:0}
+.shiai-row .f>span{font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint)}
+.shiai-row .f-date{grid-area:date}
+.shiai-row .f-pts{grid-area:pts}
+.shiai-row .f-lieu{grid-area:lieu}
+.shiai-row .f-note{grid-area:note}
+.shiai-row input{min-width:0;touch-action:pan-y}
+.shiai-row.swiping{transition:none;background:rgba(207,41,10,.14);border-color:rgba(207,41,10,.38);user-select:none}
+.shiai-row.row-ok{background:linear-gradient(180deg,rgba(74,222,128,.16),rgba(255,255,255,.03));border-color:rgba(74,222,128,.35)}
+.swipe-hint{margin:.1rem 0 .9rem;font-size:.64rem;color:var(--faint);text-align:center}
 .shiai-warning{margin:0 0 .8rem;padding:.85rem;font-size:.76rem;color:#ffcf8a;border-color:rgba(255,170,60,.3);background:rgba(255,170,60,.12)}
 .shiai-warning strong{color:#ffb26b}
 
@@ -432,32 +433,6 @@ body:has(#dan-4:checked) .kata-card:not([data-kgrade="4"]){display:none}
    ============================================================ */
 @media (max-width:700px){
   input[type="date"],input[type="number"],input[type="text"],select,textarea{font-size:16px}
-  .shiai-table input[type="number"]{max-width:none}
-  .shiai-table-wrap{overflow:visible;border-radius:0}
-  .shiai-table{min-width:0;display:block}
-  .shiai-table thead{display:none}
-  .shiai-table tbody,.shiai-table tr,.shiai-table td{display:block;width:100%}
-  .shiai-table tr{
-    position:relative;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:.5rem;
-    grid-template-areas:"date pts" "lieu lieu" "note note";
-    padding:.65rem .7rem 1.5rem;margin-bottom:.5rem;
-    border-radius:16px;background:rgba(255,255,255,.055);
-    border:1px solid var(--hair);box-shadow:var(--shadow);
-  }
-  .shiai-table td{padding:0;border:0}
-  .shiai-table td::before{display:block;margin-bottom:.15rem;font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint)}
-  .shiai-table td:nth-child(1){grid-area:date}
-  .shiai-table td:nth-child(2){grid-area:lieu}
-  .shiai-table td:nth-child(3){grid-area:pts}
-  .shiai-table td:nth-child(4){grid-area:note}
-  .shiai-table td:nth-child(1)::before{content:"Date"}
-  .shiai-table td:nth-child(2)::before{content:"Lieu / compétition"}
-  .shiai-table td:nth-child(3)::before{content:"Points"}
-  .shiai-table td:nth-child(4)::before{content:"Détail"}
-  .shiai-table td:nth-child(5){position:absolute;right:.55rem;bottom:.45rem;width:auto}
-  .shiai-table td:nth-child(5)::before{display:none}
-  .shiai-table tr.row-ok td:first-child{box-shadow:none}
-  .shiai-table tr.row-ok{background:linear-gradient(180deg,rgba(74,222,128,.16),rgba(255,255,255,.03));border-color:rgba(74,222,128,.35)}
   .shiai-total strong{font-size:1.5rem}
   .shiai-threshold{margin-left:0;width:100%;text-align:left}
 }
@@ -496,8 +471,7 @@ body:has(#dan-4:checked) .kata-card:not([data-kgrade="4"]){display:none}
   .cond-inputs{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.55rem .9rem}
   .cond-results{order:-1}
   .commission-fields{grid-template-columns:auto 1fr auto;align-items:end}
-  .shiai-table-wrap{background:var(--card);-webkit-backdrop-filter:var(--glass);backdrop-filter:var(--glass);border:1px solid var(--hair);box-shadow:var(--shadow)}
-  .shiai-table{min-width:560px}
+  .shiai-list{grid-template-columns:1fr 1fr}
 }
 @media (min-width:560px) and (max-width:819px){
   .grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
@@ -696,6 +670,14 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
 </div>
 </details>
 
+<div class="progress-container">
+<div class="progress-header">
+<h3>📈 Suivi de la maîtrise UV2</h3>
+<span class="progress-text" id="progressText">0 / 0 techniques validées</span>
+</div>
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
 <div class="grid" id="grid">
 <!-- 1er DAN - NAGE -->
 <article class="card" data-grade="1" data-cat="nage" data-fam="koshi"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Haraï-goshi</h3><p class="sub">Koshi-waza</p></div><input type="checkbox" class="track" data-id="1-harai-goshi"></div></article>
@@ -801,14 +783,6 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
 </div>
 <p class="empty-hint" id="techEmpty" aria-live="polite" style="display:none">Aucune technique ne correspond à ces filtres.</p>
 
-<div class="progress-container">
-<div class="progress-header">
-<h3>📈 Suivi de la maîtrise UV2</h3>
-<span class="progress-text" id="progressText">0 / 0 techniques validées</span>
-</div>
-<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-</div>
-
 <div class="date-box">
 <label>Date de validation UV2 : <input type="date" id="techDate"></label>
 </div>
@@ -843,23 +817,21 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
 <button class="btn-add" id="addShiaiRow">+ Ajouter une compétition</button>
 </div>
 
-<div class="shiai-table-wrap">
-<table class="shiai-table">
-<thead>
-<tr>
-<th style="width:130px">Date</th>
-<th>Lieu / Compétition</th>
-<th style="width:90px">Points</th>
-<th style="width:180px">Détail (optionnel)</th>
-<th style="width:50px"></th>
-</tr>
-</thead>
-<tbody id="shiaiBody">
-<tr><td><input type="date" data-f="date" value=""></td><td><input type="text" data-f="lieu" value="" placeholder="Championnat régional…"></td><td><input type="number" min="0" step="1" data-f="pts" value="0"></td><td><input type="text" data-f="note" value="" placeholder="1 ippon + 1 waza-ari"></td><td><button class="del-row" title="Supprimer">×</button></td></tr>
-<tr><td><input type="date" data-f="date" value=""></td><td><input type="text" data-f="lieu" value="" placeholder="Shiai / test efficacité…"></td><td><input type="number" min="0" step="1" data-f="pts" value="0"></td><td><input type="text" data-f="note" value="" placeholder=""></td><td><button class="del-row" title="Supprimer">×</button></td></tr>
-</tbody>
-</table>
+<div class="shiai-list" id="shiaiBody">
+<div class="shiai-row">
+<div class="f f-date"><span>Date</span><input type="date" data-f="date" value=""></div>
+<div class="f f-pts"><span>Points</span><input type="number" min="0" step="1" data-f="pts" value="0"></div>
+<div class="f f-lieu"><span>Lieu / compétition</span><input type="text" data-f="lieu" value="" placeholder="Championnat régional…"></div>
+<div class="f f-note"><span>Détail</span><input type="text" data-f="note" value="" placeholder="1 ippon + 1 waza-ari"></div>
 </div>
+<div class="shiai-row">
+<div class="f f-date"><span>Date</span><input type="date" data-f="date" value=""></div>
+<div class="f f-pts"><span>Points</span><input type="number" min="0" step="1" data-f="pts" value="0"></div>
+<div class="f f-lieu"><span>Lieu / compétition</span><input type="text" data-f="lieu" value="" placeholder="Shiai / test efficacité…"></div>
+<div class="f f-note"><span>Détail</span><input type="text" data-f="note" value="" placeholder=""></div>
+</div>
+</div>
+<p class="swipe-hint">Glissez une compétition vers la gauche pour la supprimer.</p>
 
 <div class="shiai-total">
 <span class="shiai-label">Total cumulé</span>
@@ -981,9 +953,9 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
 
   if(cGrade) {
     cGrade.addEventListener('change', updateConditions);
-    cAnnee.addEventListener('input', updateConditions);
-    cDatePrev.addEventListener('change', updateConditions);
-    cDateExam.addEventListener('change', updateConditions);
+    cAnnee.addEventListener('input', function(){ store.set(key('cond','annee'), cAnnee.value); updateConditions(); });
+    cDatePrev.addEventListener('change', function(){ store.set(key('cond','datePrec'), cDatePrev.value); updateConditions(); });
+    cDateExam.addEventListener('change', function(){ store.set(key('cond','dateExam'), cDateExam.value); updateConditions(); });
   }
 
   /* --- GESTION DE LA BARRE DE MAÎTRISE UV2 (CUMULATIVE) --- */
@@ -1150,7 +1122,7 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
 
   function rowsToData(){
     var data = [];
-    var trs = shiaiBody.querySelectorAll('tr');
+    var trs = shiaiBody.querySelectorAll('.shiai-row');
     for(var i=0;i<trs.length;i++){
       var tr = trs[i];
       var d = tr.querySelector('input[data-f="date"]');
@@ -1202,16 +1174,16 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
   }
 
   function appendRow(data){
-    var tr = document.createElement('tr');
+    var row = document.createElement('div');
+    row.className = 'shiai-row';
     var safeLieu = String((data&&data.lieu)||'').replace(/"/g,'&quot;');
     var safeNote = String((data&&data.note)||'').replace(/"/g,'&quot;');
-    tr.innerHTML =
-      '<td><input type="date" data-f="date" value="'+((data&&data.date)||'')+'"></td>'+
-      '<td><input type="text" data-f="lieu" value="'+safeLieu+'" placeholder="Compétition…"></td>'+
-      '<td><input type="number" min="0" step="1" data-f="pts" value="'+((data&&Number(data.pts))||0)+'"></td>'+
-      '<td><input type="text" data-f="note" value="'+safeNote+'" placeholder="Détail"></td>'+
-      '<td><button class="del-row" title="Supprimer">×</button></td>';
-    shiaiBody.appendChild(tr);
+    row.innerHTML =
+      '<div class="f f-date"><span>Date</span><input type="date" data-f="date" value="'+((data&&data.date)||'')+'"></div>'+
+      '<div class="f f-pts"><span>Points</span><input type="number" min="0" step="1" data-f="pts" value="'+((data&&Number(data.pts))||0)+'"></div>'+
+      '<div class="f f-lieu"><span>Lieu / compétition</span><input type="text" data-f="lieu" value="'+safeLieu+'" placeholder="Compétition…"></div>'+
+      '<div class="f f-note"><span>Détail</span><input type="text" data-f="note" value="'+safeNote+'" placeholder="Détail"></div>';
+    shiaiBody.appendChild(row);
   }
 
   if(shiaiBody){
@@ -1221,7 +1193,7 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
       if(rawS) saved = JSON.parse(rawS) || [];
     } catch(e){ saved = []; }
     if(Array.isArray(saved) && saved.length > 0){
-      var trs = shiaiBody.querySelectorAll('tr');
+      var trs = shiaiBody.querySelectorAll('.shiai-row');
       for(var i=0;i<saved.length;i++){
         if(i < trs.length){
           var tr = trs[i];
@@ -1239,15 +1211,49 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
       var t = e.target;
       if(t && t.tagName === 'INPUT'){ saveShiai(); updateTotal(); }
     });
-    shiaiBody.addEventListener('click', function(e){
-      var t = e.target;
-      if(t && t.classList && t.classList.contains('del-row')){
-        var tr = t.closest('tr');
-        if(tr) tr.parentNode.removeChild(tr);
-        saveShiai();
-        updateTotal();
-      }
+
+    /* --- Suppression par glissement vers la gauche --- */
+    var swipe = null;
+    shiaiBody.addEventListener('pointerdown', function(e){
+      if(e.pointerType === 'mouse' && e.button !== 0) return;
+      var row = e.target.closest('.shiai-row');
+      if(!row) return;
+      if(e.target.closest('button,a')) return;
+      swipe = { row: row, id: e.pointerId, x: e.clientX, y: e.clientY, dx: 0, active: false };
     });
+    shiaiBody.addEventListener('pointermove', function(e){
+      if(!swipe || e.pointerId !== swipe.id) return;
+      var dx = e.clientX - swipe.x;
+      var dy = e.clientY - swipe.y;
+      if(!swipe.active){
+        if(Math.abs(dx) < 12 || Math.abs(dx) <= Math.abs(dy) || dx > 0) return;
+        swipe.active = true;
+        swipe.row.classList.add('swiping');
+        try { swipe.row.setPointerCapture(e.pointerId); } catch(err){}
+      }
+      swipe.dx = Math.min(0, dx);
+      swipe.row.style.transform = 'translateX(' + Math.max(swipe.dx, -150) + 'px)';
+    });
+    function endSwipe(e){
+      if(!swipe || e.pointerId !== swipe.id) return;
+      var st = swipe;
+      swipe = null;
+      if(!st.active) return;
+      st.row.classList.remove('swiping');
+      if(st.dx < -80){
+        st.row.style.transform = 'translateX(-120%)';
+        st.row.style.opacity = '0';
+        setTimeout(function(){
+          if(st.row.parentNode) st.row.parentNode.removeChild(st.row);
+          saveShiai();
+          updateTotal();
+        }, 220);
+      } else {
+        st.row.style.transform = '';
+      }
+    }
+    shiaiBody.addEventListener('pointerup', endSwipe);
+    shiaiBody.addEventListener('pointercancel', endSwipe);
   }
 
   if(btnAdd){
@@ -1269,11 +1275,15 @@ if('serviceWorker' in navigator){ window.addEventListener('load', function(){ na
   if(cGrade){
     var sg = store.get(key('cond','grade'));
     if(sg) cGrade.value = sg;
+    var sa = store.get(key('cond','annee')); if(sa) cAnnee.value = sa;
+    var sp = store.get(key('cond','datePrec')); if(sp) cDatePrev.value = sp;
+    var se = store.get(key('cond','dateExam')); if(se) cDateExam.value = se;
     cGrade.addEventListener('change', function(){
       store.set(key('cond','grade'), cGrade.value);
       applyGrade(cGrade.value);
     });
     applyGrade(cGrade.value);
+    updateConditions();
   }
 
   /* --- UV3 : MODE SHIAI / EFFICACITÉ COMBINÉE --- */
