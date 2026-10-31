@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Préparation Dan – Judo FFJDA 2026/2027</title>
+<style>
+:root{--bg:#f4f4f9;--card:#fff;--text:#1e1e2f;--accent:#b30000;--green:#2e7d32;--border:#ddd;--shadow:0 2px 8px rgba(0,0,0,.08)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:1.2rem}
+.container{max-width:1200px;margin:0 auto}
+header{text-align:center;margin-bottom:1.2rem}
+header h1{font-size:1.7rem;color:var(--accent);margin-bottom:.3rem}
+header p{color:#555;font-size:.92rem}
+input[name="tab"]{display:none}
+.tabs{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:1.2rem;border-bottom:2px solid var(--border)}
+.tabs label{padding:.65rem 1rem;background:#fff;border:1px solid var(--border);border-bottom:none;border-radius:8px 8px 0 0;cursor:pointer;font-weight:600;font-size:.88rem;margin-bottom:-2px;transition:.15s;color:#555}
+.tabs label:hover{background:#f4f4f9}
+#tab-conditions:checked ~ .tabs label[for="tab-conditions"],
+#tab-kata:checked ~ .tabs label[for="tab-kata"],
+#tab-tech:checked ~ .tabs label[for="tab-tech"],
+#tab-shiai:checked ~ .tabs label[for="tab-shiai"],
+#tab-commission:checked ~ .tabs label[for="tab-commission"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tab-content{display:none}
+#tab-conditions:checked ~ #content-conditions,
+#tab-kata:checked ~ #content-kata,
+#tab-tech:checked ~ #content-tech,
+#tab-shiai:checked ~ #content-shiai,
+#tab-commission:checked ~ #content-commission{display:block}
+.intro{background:var(--card);border-left:6px solid var(--accent);padding:1rem 1.2rem;border-radius:8px;box-shadow:var(--shadow);margin-bottom:1rem}
+.intro h2{font-size:1.15rem;margin-bottom:.5rem}
+.intro p{margin-bottom:.6rem;font-size:.92rem;text-align:justify}
+.intro small{color:#666;font-style:italic;font-size:.82rem}
+.date-box{background:var(--card);border-radius:8px;box-shadow:var(--shadow);padding:.9rem 1.2rem;margin-bottom:1.2rem;display:flex;flex-wrap:wrap;align-items:center;gap:1rem;font-size:.92rem}
+.date-box label{font-weight:600;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.date-box input[type="date"], .date-box input[type="number"]{padding:.45rem .7rem;border:1px solid var(--border);border-radius:6px;font-size:.92rem;font-family:inherit}
+.filters{background:var(--card);padding:1rem 1.2rem;border-radius:8px;box-shadow:var(--shadow);margin-bottom:1.2rem;display:flex;flex-direction:column;gap:.8rem}
+.filters fieldset{border:none;display:flex;flex-wrap:wrap;align-items:center;gap:.4rem}
+.filters legend{font-weight:700;font-size:.88rem;margin-right:.5rem;padding:0;float:left}
+input[type="radio"].filt, input[type="radio"].global-grade{display:none}
+input[type="radio"].filt+label, input[type="radio"].global-grade+label{display:inline-block;padding:.38rem .85rem;border:1px solid var(--border);border-radius:20px;cursor:pointer;background:#fff;font-size:.85rem;transition:.15s;user-select:none}
+input[type="radio"].filt:checked+label, input[type="radio"].global-grade:checked+label{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+.note{font-size:.78rem;color:#666;margin-left:auto}
+#sub-nage,#sub-ne{display:none}
+body:has(#c-nage:checked) #sub-nage{display:flex}
+body:has(#c-ne:checked) #sub-ne{display:flex}
+.uv2-box{background:var(--card);border-radius:8px;box-shadow:var(--shadow);padding:1rem 1.2rem;margin-bottom:1.2rem;border-top:4px solid var(--accent)}
+.uv2-box h2{font-size:1.1rem;margin-bottom:.5rem;color:var(--accent)}
+.uv2-box p{font-size:.9rem;margin-bottom:.5rem;text-align:justify}
+.uv2-box ul{margin:.3rem 0 .5rem 1.2rem;font-size:.88rem}
+.uv2-box li{margin-bottom:.25rem}
+.uv2-content{display:none}
+body:has(#tg-1:checked) #uv2-1{display:block}
+body:has(#tg-2:checked) #uv2-2{display:block}
+body:has(#tg-3:checked) #uv2-3{display:block}
+body:has(#tg-4:checked) #uv2-4{display:block}
+body:has(#tg-all:checked) #uv2-all{display:block}
+.progress-container{background:var(--card);border-radius:8px;box-shadow:var(--shadow);padding:.9rem 1.2rem;margin-bottom:1.2rem;border-left:6px solid var(--green)}
+.progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
+.progress-header h3{font-size:.95rem;color:var(--green)}
+.progress-text{font-size:.88rem;font-weight:600;color:#444}
+.progress-track{width:100%;height:11px;background:#e6e6ef;border-radius:6px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:var(--green);transition:width .3s}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:.85rem}
+.card{background:var(--card);border-radius:8px;box-shadow:var(--shadow);padding:.85rem 1rem;border-top:4px solid var(--accent);display:flex;flex-direction:column}
+.card.done,.card:has(.track:checked){border-top-color:var(--green);background:#f4fbf4}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem}
+.card-head input[type="checkbox"]{width:22px;height:22px;accent-color:var(--green);cursor:pointer;flex-shrink:0}
+.badge{display:inline-block;font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:.1rem .5rem;border-radius:20px;margin-bottom:.3rem;width:fit-content}
+.dan1{background:#e6f0ff;color:#0044cc}
+.dan2{background:#fff3e0;color:#b35900}
+.dan3{background:#e8f5e9;color:#1b5e20}
+.dan4{background:#fce4ec;color:#880e4f}
+.b-nage{background:#f3e5f5;color:#6a1b9a}
+.b-ne{background:#e0f2f1;color:#00695c}
+.card h3{font-size:1rem;margin:.25rem 0 .12rem}
+.card .sub{font-size:.78rem;color:#666;margin-bottom:.4rem}
+/* Filtres UV2 cumulatifs */
+body:has(#tg-1:checked) .card:not([data-grade="1"]){display:none}
+body:has(#tg-2:checked) .card:not([data-grade="1"]):not([data-grade="2"]){display:none}
+body:has(#tg-3:checked) .card:not([data-grade="1"]):not([data-grade="2"]):not([data-grade="3"]){display:none}
+body:has(#tg-4:checked) .card:not([data-grade="1"]):not([data-grade="2"]):not([data-grade="3"]){display:none}
+/* Filtres Catégories UV2 */
+body:has(#c-nage:checked) .card:not([data-cat="nage"]){display:none}
+body:has(#c-nage:checked):has(#f-te:checked) .card:not([data-fam="te"]){display:none}
+body:has(#c-nage:checked):has(#f-koshi:checked) .card:not([data-fam="koshi"]){display:none}
+body:has(#c-nage:checked):has(#f-ashi:checked) .card:not([data-fam="ashi"]){display:none}
+body:has(#c-nage:checked):has(#f-sutemi:checked) .card:not([data-fam="sutemi"]){display:none}
+body:has(#c-ne:checked) .card:not([data-cat="ne"]){display:none}
+body:has(#c-ne:checked):has(#f-osae:checked) .card:not([data-fam="osae"]){display:none}
+body:has(#c-ne:checked):has(#f-shime:checked) .card:not([data-fam="shime"]){display:none}
+body:has(#c-ne:checked):has(#f-kansetsu:checked) .card:not([data-fam="kansetsu"]){display:none}
+.filters-row{background:var(--card);padding:.8rem 1.2rem;border-radius:8px;box-shadow:var(--shadow);margin-bottom:1.2rem;display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;font-size:.9rem}
+.filters-row strong{font-size:.88rem;margin-right:.4rem}
+.kata-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:.9rem}
+.kata-card{background:var(--card);border-radius:8px;box-shadow:var(--shadow);padding:.9rem 1.1rem;border-top:4px solid var(--accent);display:flex;flex-direction:column}
+.kata-card.done,.kata-card:has(.kata-track:checked){border-top-color:var(--green);background:#f4fbf4}
+.kata-head{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem}
+.kata-head input[type="checkbox"]{width:22px;height:22px;accent-color:var(--green);cursor:pointer;flex-shrink:0}
+.kata-card h3{font-size:1rem;margin:.25rem 0 .12rem}
+.kata-card .sub{font-size:.8rem;color:#666;margin-bottom:.5rem}
+.kata-card .choix{font-size:.76rem;color:#b35900;font-style:italic;margin:.2rem 0 .4rem}
+/* Filtre Kata exclusif par dan */
+body:has(#dan-1:checked) .kata-card:not([data-kgrade="1"]){display:none}
+body:has(#dan-2:checked) .kata-card:not([data-kgrade="2"]){display:none}
+body:has(#dan-3:checked) .kata-card:not([data-kgrade="3"]){display:none}
+body:has(#dan-4:checked) .kata-card:not([data-kgrade="4"]){display:none}
+.shiai-total{background:var(--card);border-radius:8px;box-shadow:var(--shadow);padding:.9rem 1.2rem;font-size:.95rem;margin-bottom:.8rem}
+.shiai-total strong{color:var(--accent);font-size:1.3rem;margin-left:.3rem}
+.shiai-threshold{font-size:.85rem;color:var(--green);margin-left:.8rem}
+.shiai-actions{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-bottom:1rem}
+.btn-add{background:var(--accent);color:#fff;border:none;padding:.6rem 1.1rem;border-radius:6px;font-weight:600;cursor:pointer;font-size:.9rem}
+.btn-add:hover{background:#8f0000}
+.shiai-table-wrap{background:var(--card);border-radius:8px;box-shadow:var(--shadow);margin-bottom:1rem;overflow-x:auto}
+.shiai-table{width:100%;border-collapse:collapse;min-width:520px}
+.shiai-table th,.shiai-table td{padding:.65rem .7rem;text-align:left;border-bottom:1px solid var(--border);font-size:.88rem;vertical-align:middle}
+.shiai-table th{background:#f4f4f9;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.4px;color:#555}
+.shiai-table input{width:100%;padding:.4rem .5rem;border:1px solid var(--border);border-radius:4px;font-size:.88rem;font-family:inherit}
+.shiai-table input[type="number"]{max-width:90px}
+.shiai-table button{background:#fde8e8;color:var(--accent);border:1px solid #f5b5b5;border-radius:4px;padding:.35rem .65rem;cursor:pointer;font-weight:700;font-size:1rem;line-height:1}
+.shiai-table button:hover{background:#fbd0d0}
+.shiai-table tr.row-ok td{background:#f4fbf4}
+.shiai-table tr.row-ok td:first-child{border-left:3px solid var(--green)}
+.shiai-warning{background:#fff3cd;border-left:6px solid #b35900;padding:.9rem 1.2rem;border-radius:8px;box-shadow:var(--shadow);margin-bottom:1rem;font-size:.88rem;color:#664d03;line-height:1.5}
+.shiai-warning strong{color:#b35900}
+.commission-box{background:var(--card);border-radius:8px;box-shadow:var(--shadow);padding:1.2rem;margin-bottom:1.2rem;border-top:4px solid var(--accent)}
+.commission-box h3{font-size:1.05rem;color:var(--accent);margin-bottom:.6rem}
+.commission-box p{font-size:.9rem;margin-bottom:.9rem;text-align:justify}
+.commission-fields{display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;font-size:.9rem}
+.commission-fields label{display:flex;align-items:center;gap:.4rem;font-weight:600}
+.commission-fields input[type="date"],.commission-fields select{padding:.45rem .7rem;border:1px solid var(--border);border-radius:6px;font-size:.9rem;font-family:inherit}
+.commission-fields input[type="checkbox"]{width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+.cond-box{background:var(--card);border-radius:8px;box-shadow:var(--shadow);padding:1.2rem;margin-bottom:1.2rem}
+.cond-box h3{font-size:1.05rem;color:var(--accent);margin-bottom:.6rem}
+.cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.cond-inputs{display:flex;flex-direction:column;gap:.5rem;}
+.cond-inputs label{font-size:.9rem;font-weight:600;}
+.cond-results{background:#f4fbf4;padding:1rem;border-radius:6px;border:1px solid #c8e6c9;font-size:.9rem;}
+.cond-results p{margin-bottom:.4rem;}
+.cond-results strong{color:var(--green);}
+.uv3-mode{background:var(--card);border-radius:8px;box-shadow:var(--shadow);padding:.9rem 1.2rem;margin-bottom:1rem;display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;font-size:.9rem}
+.uv3-mode strong{margin-right:.4rem}
+#combiBox{display:none;background:var(--card);border-radius:8px;box-shadow:var(--shadow);padding:1rem 1.2rem;margin-bottom:1rem;border-left:6px solid var(--green);font-size:.9rem}
+body:has(#m-combi:checked) #combiBox{display:block}
+.rule-combi{display:none}
+body:has(#m-combi:checked) .rule-combi{display:block}
+body:has(#m-combi:checked) .rule-shiai{display:none}
+.combi-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;font-weight:600;margin:.4rem 0}
+#combiBox .progress-track{margin-bottom:.8rem}
+.combi-b{display:flex;align-items:center;gap:.5rem;margin:.4rem 0;flex-wrap:wrap}
+.combi-b input[type="checkbox"]{width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+#partieBNote{width:100%;max-width:420px;padding:.4rem .6rem;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:.88rem;margin-top:.2rem}
+.combi-note{font-size:.78rem;color:#666;margin-top:.6rem;font-style:italic}
+.video-box{background:var(--card);border-radius:8px;box-shadow:var(--shadow);padding:1rem 1.2rem;margin-bottom:1.2rem;border-top:4px solid #c00}
+.video-box h3{font-size:1rem;color:var(--accent);margin-bottom:.5rem}
+.video-wrap{position:relative;padding-top:56.25%;border-radius:6px;overflow:hidden;background:#000}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-box .sub{font-size:.8rem;color:#666;margin-top:.4rem}
+#kataNageVideo{display:none}
+body:has(#dan-1:checked) #kataNageVideo,body:has(#dan-2:checked) #kataNageVideo,body:has(#dan-all:checked) #kataNageVideo{display:block}
+.yt-link{margin-top:auto;padding-top:.5rem;font-size:.8rem;font-weight:600;color:var(--accent);text-decoration:none}
+.yt-link:hover{text-decoration:underline}
+.ig-link{display:block;margin-top:.25rem;font-size:.8rem;font-weight:600;color:#c13584;text-decoration:none}
+.ig-link:hover{text-decoration:underline}
+.backup-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;justify-content:flex-end;padding:.5rem 1rem;background:var(--card);border-bottom:1px solid var(--border);font-size:.82rem}
+.backup-status{margin-right:auto;color:#666}
+.backup-status.warn{color:#b26a00;font-weight:600}
+.btn-backup{padding:.4rem .8rem;border:1px solid var(--accent);background:#fff;color:var(--accent);border-radius:6px;cursor:pointer;font-family:inherit;font-size:.82rem;font-weight:600}
+.btn-backup:hover{background:var(--accent);color:#fff}
+.export-panel{background:var(--card);border-bottom:2px solid var(--accent);padding:.8rem 1rem;font-size:.85rem}
+.export-panel p{margin-bottom:.5rem}
+.export-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem}
+#exportText{width:100%;font-family:monospace;font-size:.72rem;border:1px solid var(--border);border-radius:6px;padding:.4rem;resize:vertical}
+footer{margin-top:2rem;text-align:center;font-size:.78rem;color:#777}
+</style>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#b30000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Judo Dan">
+<link rel="apple-touch-icon" href="icon-180.png">
+<script>
+if('serviceWorker' in navigator){ window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
+</script>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>🥋 Préparation Dan – Judo FFJDA</h1>
+<p>Textes Officiels 2026/2027 – Du 1er au 4e dan</p>
+</header>
+<div class="backup-bar">
+<span class="backup-status" id="storageStatus"></span>
+<button type="button" class="btn-backup" id="btnExport">💾 Exporter la sauvegarde</button>
+<button type="button" class="btn-backup" id="btnImport">📂 Importer une sauvegarde</button>
+<input type="file" id="fileImport" accept=".json,application/json" style="display:none">
+</div>
+<div class="export-panel" id="exportPanel" style="display:none">
+<p id="exportMsg"></p>
+<div class="export-actions">
+<button type="button" class="btn-backup" id="btnDownload">⬇ Télécharger le fichier</button>
+<button type="button" class="btn-backup" id="btnCopy">📋 Copier le texte</button>
+<button type="button" class="btn-backup" id="btnCloseExport">Fermer</button>
+</div>
+<textarea id="exportText" readonly rows="6"></textarea>
+</div>
+
+<input type="radio" name="tab" id="tab-conditions" checked>
+<input type="radio" name="tab" id="tab-kata">
+<input type="radio" name="tab" id="tab-tech">
+<input type="radio" name="tab" id="tab-shiai">
+<input type="radio" name="tab" id="tab-commission">
+
+<nav class="tabs">
+<label for="tab-conditions">📅 Conditions d'accès</label>
+<label for="tab-kata">📖 Kata (UV1)</label>
+<label for="tab-tech">🥋 Technique (UV2)</label>
+<label for="tab-shiai">🏆 Shiai (UV3)</label>
+<label for="tab-commission">🤝 Commission (UV4)</label>
+</nav>
+
+<!-- ============================ CONDITIONS D'ACCÈS ============================ -->
+<div class="tab-content" id="content-conditions">
+<section class="intro">
+<h2>📅 Vérificateur de conditions de présentation</h2>
+<p>Conformément à l'article 3.2 des Textes Officiels 2026/2027, vérifiez si vous remplissez les conditions d'âge et de délai par rapport à votre grade précédent. <em>(L'année de référence est calculée sur l'année civile en cours).</em></p>
+</section>
+<div class="cond-box">
+<div class="cond-grid">
+<div class="cond-inputs">
+<label>Grade visé :
+<select id="condGrade">
+<option value="1">1er Dan</option>
+<option value="2">2e Dan</option>
+<option value="3">3e Dan</option>
+<option value="4">4e Dan</option>
+</select>
+</label>
+<label>Année de naissance : <input type="number" id="condAnneeNaissance" placeholder="Ex: 1990" min="1930" max="2015"></label>
+<label>Date d'homologation du grade précédent : <input type="date" id="condDatePrecedent"></label>
+<label>Date de l'examen (prévue) : <input type="date" id="condDateExamen"></label>
+</div>
+<div class="cond-results" id="condResultats">
+<p>Remplissez les champs pour voir votre éligibilité.</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============================ UV1 KATA ============================ -->
+<div class="tab-content" id="content-kata">
+<section class="intro">
+<h2>📖 UV1 – Kata</h2>
+<p>Démonstration codifiée. Sélectionnez un grade pour filtrer les séries attendues.</p>
+<small>Source : Textes Officiels 2026/2027 – Art. 3.3.</small>
+</section>
+
+<div class="date-box">
+<label>Date de validation UV1 : <input type="date" id="kataDate"></label>
+<label><input type="checkbox" id="exempt40Kata"> J'ai 40 ans et plus (Dispensé du rôle de Uke)</label>
+</div>
+
+<div class="filters-row">
+<strong>Grade :</strong>
+<input type="radio" name="globalDan" id="dan-all" checked class="global-grade"><label for="dan-all">Tous</label>
+<input type="radio" name="globalDan" id="dan-1" class="global-grade"><label for="dan-1">1er Dan</label>
+<input type="radio" name="globalDan" id="dan-2" class="global-grade"><label for="dan-2">2e Dan</label>
+<input type="radio" name="globalDan" id="dan-3" class="global-grade"><label for="dan-3">3e Dan</label>
+<input type="radio" name="globalDan" id="dan-4" class="global-grade"><label for="dan-4">4e Dan</label>
+</div>
+
+<section class="video-box" id="kataNageVideo">
+<h3>🎥 Vidéo de référence – Nage-no-kata (1er et 2e dan)</h3>
+<div class="video-wrap"><iframe src="https://www.youtube.com/embed/bA_XnjxyMiI" title="Vidéo de référence Nage-no-kata" loading="lazy" allowfullscreen></iframe></div>
+<p class="sub">Lien direct : <a href="https://youtu.be/bA_XnjxyMiI" target="_blank" rel="noopener">youtu.be/bA_XnjxyMiI</a></p>
+</section>
+
+<div class="kata-grid">
+<!-- 1er DAN -->
+<article class="kata-card" data-kgrade="1"><div class="kata-head"><div><span class="badge dan1">1er Dan</span><h3>Nage-no-Kata – Séries 1, 2, 3</h3><p class="sub">Te-waza, Koshi-waza, Ashi-waza – rôle <strong>Tori</strong></p></div><input type="checkbox" class="kata-track" data-id="1-nnk-tori"></div></article>
+<article class="kata-card" data-kgrade="1"><div class="kata-head"><div><span class="badge dan1">1er Dan</span><h3>Nage-no-Kata – 1 Série au choix</h3><p class="sub">Série choisie par le jury – rôle <strong>Uke</strong></p><p class="choix">Sauf dispense 40 ans et +</p></div><input type="checkbox" class="kata-track" data-id="1-nnk-uke"></div></article>
+
+<!-- 2e DAN -->
+<article class="kata-card" data-kgrade="2"><div class="kata-head"><div><span class="badge dan2">2e Dan</span><h3>Nage-no-Kata COMPLET</h3><p class="sub">Les 5 séries – rôle <strong>Tori uniquement</strong></p></div><input type="checkbox" class="kata-track" data-id="2-nnk-tori"></div></article>
+
+<!-- 3e DAN -->
+<article class="kata-card" data-kgrade="3"><div class="kata-head"><div><span class="badge dan3">3e Dan</span><h3>Katame-no-Kata complet</h3><p class="sub">3 séries (Osaekomi, Shime, Kansetsu) – rôle <strong>Tori</strong></p><p class="choix">Choix 1 sur 2</p></div><input type="checkbox" class="kata-track" data-id="3-knk-complet"></div></article>
+<article class="kata-card" data-kgrade="3"><div class="kata-head"><div><span class="badge dan3">3e Dan</span><h3>Kime-no-Kata complet</h3><p class="sub">Idori + Tachiai – rôle <strong>Tori</strong></p><p class="choix">Choix 2 sur 2</p></div><input type="checkbox" class="kata-track" data-id="3-knk-kime-complet"></div></article>
+
+<!-- 4e DAN -->
+<article class="kata-card" data-kgrade="4"><div class="kata-head"><div><span class="badge dan4">4e Dan</span><h3>Ju-no-Kata</h3><p class="sub">Intégralité – rôle <strong>Tori</strong> uniquement</p></div><input type="checkbox" class="kata-track" data-id="4-jnk-tori"></div></article>
+</div>
+</div>
+
+<!-- ============================ UV2 TECHNIQUE ============================ -->
+<div class="tab-content" id="content-tech">
+<section class="intro">
+<h2>📋 UV2 – Épreuve technique</h2>
+<p>Le candidat démontre des techniques de <em>Nage-waza</em> et <em>Ne-waza</em>.</p>
+<small>Source : Textes Officiels 2026/2027 – Art. 3.3.</small>
+</section>
+
+<div class="date-box">
+<label>Date de validation UV2 : <input type="date" id="techDate"></label>
+</div>
+
+<section class="filters">
+<fieldset>
+<legend>Grade (cumulatif)</legend>
+<input type="radio" name="techDan" id="tg-all" checked class="global-grade"><label for="tg-all">Tous</label>
+<input type="radio" name="techDan" id="tg-1" class="global-grade"><label for="tg-1">1er Dan</label>
+<input type="radio" name="techDan" id="tg-2" class="global-grade"><label for="tg-2">2e Dan</label>
+<input type="radio" name="techDan" id="tg-3" class="global-grade"><label for="tg-3">3e Dan</label>
+<input type="radio" name="techDan" id="tg-4" class="global-grade"><label for="tg-4">4e Dan</label>
+</fieldset>
+<fieldset>
+<legend>Catégorie</legend>
+<input type="radio" name="c" id="c-all" checked class="filt"><label for="c-all">Toutes</label>
+<input type="radio" name="c" id="c-nage" class="filt"><label for="c-nage">Debout (Nage-waza)</label>
+<input type="radio" name="c" id="c-ne" class="filt"><label for="c-ne">Sol (Ne-waza)</label>
+</fieldset>
+<fieldset id="sub-nage">
+<legend>Famille debout</legend>
+<input type="radio" name="f-nage" id="f-te" class="filt"><label for="f-te">Te-waza</label>
+<input type="radio" name="f-nage" id="f-koshi" class="filt"><label for="f-koshi">Koshi-waza</label>
+<input type="radio" name="f-nage" id="f-ashi" class="filt"><label for="f-ashi">Ashi-waza</label>
+<input type="radio" name="f-nage" id="f-sutemi" class="filt"><label for="f-sutemi">Sutemi-waza</label>
+</fieldset>
+<fieldset id="sub-ne">
+<legend>Famille sol</legend>
+<input type="radio" name="f-ne" id="f-osae" class="filt"><label for="f-osae">Osaekomi-waza</label>
+<input type="radio" name="f-ne" id="f-shime" class="filt"><label for="f-shime">Shime-waza</label>
+<input type="radio" name="f-ne" id="f-kansetsu" class="filt"><label for="f-kansetsu">Kansetsu-waza</label>
+</fieldset>
+</section>
+
+<section class="uv2-box">
+<h2>📋 Déroulé de l’épreuve UV2</h2>
+<div class="uv2-content" id="uv2-all"><p>Sélectionnez un grade ci-dessus pour afficher le déroulé détaillé.</p></div>
+<div class="uv2-content" id="uv2-1">
+<p><strong>1er Dan (Shodan).</strong> <strong>6 techniques en nage-waza</strong> et <strong>4 en ne-waza</strong> choisies par le jury (annexe 1).</p>
+<ul><li>Nage-waza démontrées <strong>en déplacement</strong>.</li><li>Ne-waza démontrées <strong>en situation d'étude</strong>.</li><li>Durée max : 5 minutes.</li><li>Tolérance : 1 méconnaissance par domaine.</li></ul>
+</div>
+<div class="uv2-content" id="uv2-2">
+<p><strong>2e Dan (Nidan).</strong> 2 épreuves non fractionnables :</p>
+<ul><li><strong>Au choix du candidat</strong> : 3 nage-waza (directions variées) + 2 ne-waza (situations de combat). 8 min max.</li><li><strong>Imposé par le jury</strong> : 3 nage-waza + 2 ne-waza (annexe 1). 5 min max.</li></ul>
+</div>
+<div class="uv2-content" id="uv2-3">
+<p><strong>3e Dan (Sandan).</strong> <strong>5 techniques imposées par le jury</strong> : 3 nage-waza + 2 ne-waza (annexe 1).</p>
+<ul><li>Durée max : 5 minutes.</li><li>Non fractionnable.</li></ul>
+</div>
+<div class="uv2-content" id="uv2-4">
+<p><strong>4e Dan (Yondan).</strong> 3 épreuves non fractionnables :</p>
+<ul><li><strong>Epreuve 1</strong> : Go-no-Sen (exercice de contre prise) en Tori.</li><li><strong>Epreuve 2</strong> : Tokui-waza Nage-waza (opportunités, séquences tactiques, liaisons debout-sol). Durée : 3 min.</li><li><strong>Epreuve 3</strong> : Tokui-waza Ne-waza. Durée : 2 min.</li></ul>
+</div>
+</section>
+
+<div class="progress-container">
+<div class="progress-header">
+<h3>📈 Suivi de la maîtrise UV2</h3>
+<span class="progress-text" id="progressText">0 / 0 techniques validées</span>
+</div>
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<div class="grid" id="grid">
+<!-- 1er DAN - NAGE -->
+<article class="card" data-grade="1" data-cat="nage" data-fam="koshi"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Haraï-goshi</h3><p class="sub">Koshi-waza</p></div><input type="checkbox" class="track" data-id="1-harai-goshi"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="koshi"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Kubi-nage</h3><p class="sub">Koshi-waza</p></div><input type="checkbox" class="track" data-id="1-kubi-nage"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="koshi"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Koshi-guruma</h3><p class="sub">Koshi-waza</p></div><input type="checkbox" class="track" data-id="1-koshi-guruma"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="koshi"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>O-goshi</h3><p class="sub">Koshi-waza</p></div><input type="checkbox" class="track" data-id="1-o-goshi"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="koshi"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Tsurikomi-goshi</h3><p class="sub">Koshi-waza</p></div><input type="checkbox" class="track" data-id="1-tsurikomi-goshi"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="koshi"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Uchi-mata</h3><p class="sub">Koshi-waza</p></div><input type="checkbox" class="track" data-id="1-uchi-mata"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="koshi"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Uki-goshi</h3><p class="sub">Koshi-waza</p></div><input type="checkbox" class="track" data-id="1-uki-goshi"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="te"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Ippon-seoi-nage</h3><p class="sub">Te-waza</p></div><input type="checkbox" class="track" data-id="1-ippon-seoi-nage"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="te"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Kata-guruma</h3><p class="sub">Te-waza</p></div><input type="checkbox" class="track" data-id="1-kata-guruma"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="te"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Uki-otoshi</h3><p class="sub">Te-waza</p></div><input type="checkbox" class="track" data-id="1-uki-otoshi"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="te"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Tai-otoshi</h3><p class="sub">Te-waza</p></div><input type="checkbox" class="track" data-id="1-tai-otoshi"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="te"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Morote-seoi-nage</h3><p class="sub">Te-waza</p></div><input type="checkbox" class="track" data-id="1-morote-seoi-nage"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="ashi"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>De-ashi-baraï</h3><p class="sub">Ashi-waza</p></div><input type="checkbox" class="track" data-id="1-de-ashi-barai"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="ashi"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Hiza-guruma</h3><p class="sub">Ashi-waza</p></div><input type="checkbox" class="track" data-id="1-hiza-guruma"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="ashi"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Sasae-tsurikomi-ashi</h3><p class="sub">Ashi-waza</p></div><input type="checkbox" class="track" data-id="1-sasae-tsurikomi-ashi"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="ashi"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Ko-soto-gari</h3><p class="sub">Ashi-waza</p></div><input type="checkbox" class="track" data-id="1-ko-soto-gari"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="ashi"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Ko-uchi-gari</h3><p class="sub">Ashi-waza</p></div><input type="checkbox" class="track" data-id="1-ko-uchi-gari"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="ashi"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Okuri-ashi-baraï</h3><p class="sub">Ashi-waza</p></div><input type="checkbox" class="track" data-id="1-okuri-ashi-barai"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="ashi"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>O-soto-gari</h3><p class="sub">Ashi-waza</p></div><input type="checkbox" class="track" data-id="1-o-soto-gari"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="ashi"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>O-uchi-gari</h3><p class="sub">Ashi-waza</p></div><input type="checkbox" class="track" data-id="1-o-uchi-gari"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="sutemi"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Sumi-gaeshi</h3><p class="sub">Sutemi-waza</p></div><input type="checkbox" class="track" data-id="1-sumi-gaeshi"></div></article>
+<article class="card" data-grade="1" data-cat="nage" data-fam="sutemi"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Tomoe-nage</h3><p class="sub">Sutemi-waza</p></div><input type="checkbox" class="track" data-id="1-tomoe-nage"></div></article>
+
+<!-- 1er DAN - NE -->
+<article class="card" data-grade="1" data-cat="ne" data-fam="osae"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Hon-gesa-gatame</h3><p class="sub">Osaekomi-waza</p></div><input type="checkbox" class="track" data-id="1-hon-gesa-gatame"></div></article>
+<article class="card" data-grade="1" data-cat="ne" data-fam="osae"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Kami-shio-gatame</h3><p class="sub">Osaekomi-waza</p></div><input type="checkbox" class="track" data-id="1-kami-shio-gatame"></div></article>
+<article class="card" data-grade="1" data-cat="ne" data-fam="osae"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Yoko-shio-gatame</h3><p class="sub">Osaekomi-waza</p></div><input type="checkbox" class="track" data-id="1-yoko-shio-gatame"></div></article>
+<article class="card" data-grade="1" data-cat="ne" data-fam="osae"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Tate-shio-gatame</h3><p class="sub">Osaekomi-waza</p></div><input type="checkbox" class="track" data-id="1-tate-shio-gatame"></div></article>
+<article class="card" data-grade="1" data-cat="ne" data-fam="osae"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Ushiro-gesa-gatame</h3><p class="sub">Osaekomi-waza</p></div><input type="checkbox" class="track" data-id="1-ushiro-gesa-gatame"></div></article>
+<article class="card" data-grade="1" data-cat="ne" data-fam="shime"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Gyaku-juji-jime</h3><p class="sub">Shime-waza</p></div><input type="checkbox" class="track" data-id="1-gyaku-juji-jime"></div></article>
+<article class="card" data-grade="1" data-cat="ne" data-fam="shime"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Hadaka-jime</h3><p class="sub">Shime-waza</p></div><input type="checkbox" class="track" data-id="1-hadaka-jime"></div></article>
+<article class="card" data-grade="1" data-cat="ne" data-fam="shime"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Kata-juji-jime</h3><p class="sub">Shime-waza</p></div><input type="checkbox" class="track" data-id="1-kata-juji-jime"></div></article>
+<article class="card" data-grade="1" data-cat="ne" data-fam="shime"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Nami-juji-jime</h3><p class="sub">Shime-waza</p></div><input type="checkbox" class="track" data-id="1-nami-juji-jime"></div></article>
+<article class="card" data-grade="1" data-cat="ne" data-fam="shime"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Okuri-eri-jime</h3><p class="sub">Shime-waza</p></div><input type="checkbox" class="track" data-id="1-okuri-eri-jime"></div></article>
+<article class="card" data-grade="1" data-cat="ne" data-fam="kansetsu"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Ude-hishigi-juji-gatame</h3><p class="sub">Kansetsu-waza</p></div><input type="checkbox" class="track" data-id="1-ude-hishigi-juji-gatame"></div></article>
+<article class="card" data-grade="1" data-cat="ne" data-fam="kansetsu"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Ude-hishigi-ude-gatame</h3><p class="sub">Kansetsu-waza</p></div><input type="checkbox" class="track" data-id="1-ude-hishigi-ude-gatame"></div></article>
+<article class="card" data-grade="1" data-cat="ne" data-fam="kansetsu"><div class="card-head"><div><span class="badge dan1">1er Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Ude-garami</h3><p class="sub">Kansetsu-waza</p></div><input type="checkbox" class="track" data-id="1-ude-garami"></div></article>
+
+<!-- 2e DAN - NAGE -->
+<article class="card" data-grade="2" data-cat="nage" data-fam="koshi"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Hane-goshi</h3><p class="sub">Koshi-waza</p></div><input type="checkbox" class="track" data-id="2-hane-goshi"></div></article>
+<article class="card" data-grade="2" data-cat="nage" data-fam="koshi"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Sode-tsurikomi-goshi</h3><p class="sub">Koshi-waza</p></div><input type="checkbox" class="track" data-id="2-sode-tsurikomi-goshi"></div></article>
+<article class="card" data-grade="2" data-cat="nage" data-fam="koshi"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Tsuri-goshi</h3><p class="sub">Koshi-waza</p></div><input type="checkbox" class="track" data-id="2-tsuri-goshi"></div></article>
+<article class="card" data-grade="2" data-cat="nage" data-fam="te"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Eri-seoi-nage</h3><p class="sub">Te-waza</p></div><input type="checkbox" class="track" data-id="2-eri-seoi-nage"></div></article>
+<article class="card" data-grade="2" data-cat="nage" data-fam="te"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Te-guruma</h3><p class="sub">Te-waza</p></div><input type="checkbox" class="track" data-id="2-te-guruma"></div></article>
+<article class="card" data-grade="2" data-cat="nage" data-fam="te"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Morote-gari</h3><p class="sub">Te-waza</p></div><input type="checkbox" class="track" data-id="2-morote-gari"></div></article>
+<article class="card" data-grade="2" data-cat="nage" data-fam="te"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Kuchiki-taoshi</h3><p class="sub">Te-waza</p></div><input type="checkbox" class="track" data-id="2-kuchiki-taoshi"></div></article>
+<article class="card" data-grade="2" data-cat="nage" data-fam="ashi"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>O-guruma</h3><p class="sub">Ashi-waza</p></div><input type="checkbox" class="track" data-id="2-o-guruma"></div></article>
+<article class="card" data-grade="2" data-cat="nage" data-fam="ashi"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Ashi-guruma</h3><p class="sub">Ashi-waza</p></div><input type="checkbox" class="track" data-id="2-ashi-guruma"></div></article>
+<article class="card" data-grade="2" data-cat="nage" data-fam="ashi"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Ko-soto-gake</h3><p class="sub">Ashi-waza</p></div><input type="checkbox" class="track" data-id="2-ko-soto-gake"></div></article>
+<article class="card" data-grade="2" data-cat="nage" data-fam="ashi"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>O-soto-otoshi</h3><p class="sub">Ashi-waza</p></div><input type="checkbox" class="track" data-id="2-o-soto-otoshi"></div></article>
+<article class="card" data-grade="2" data-cat="nage" data-fam="ashi"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Tsubame-gaeshi</h3><p class="sub">Ashi-waza</p></div><input type="checkbox" class="track" data-id="2-tsubame-gaeshi"></div></article>
+<article class="card" data-grade="2" data-cat="nage" data-fam="sutemi"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Ura-nage</h3><p class="sub">Sutemi-waza</p></div><input type="checkbox" class="track" data-id="2-ura-nage"></div></article>
+<article class="card" data-grade="2" data-cat="nage" data-fam="sutemi"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Tani-otoshi</h3><p class="sub">Sutemi-waza</p></div><input type="checkbox" class="track" data-id="2-tani-otoshi"></div></article>
+<article class="card" data-grade="2" data-cat="nage" data-fam="sutemi"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Yoko-guruma</h3><p class="sub">Sutemi-waza</p></div><input type="checkbox" class="track" data-id="2-yoko-guruma"></div></article>
+<article class="card" data-grade="2" data-cat="nage" data-fam="sutemi"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Yoko-gake</h3><p class="sub">Sutemi-waza</p></div><input type="checkbox" class="track" data-id="2-yoko-gake"></div></article>
+<article class="card" data-grade="2" data-cat="nage" data-fam="sutemi"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Ko-uchi-makikomi</h3><p class="sub">Sutemi-waza</p></div><input type="checkbox" class="track" data-id="2-ko-uchi-makikomi"></div></article>
+<article class="card" data-grade="2" data-cat="nage" data-fam="sutemi"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Yoko-tomoe-nage</h3><p class="sub">Sutemi-waza</p></div><input type="checkbox" class="track" data-id="2-yoko-tomoe-nage"></div></article>
+<article class="card" data-grade="2" data-cat="nage" data-fam="sutemi"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Uki-waza</h3><p class="sub">Sutemi-waza</p></div><input type="checkbox" class="track" data-id="2-uki-waza"></div></article>
+
+<!-- 2e DAN - NE -->
+<article class="card" data-grade="2" data-cat="ne" data-fam="osae"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Kuzure-kami-shio-gatame</h3><p class="sub">Osaekomi-waza</p></div><input type="checkbox" class="track" data-id="2-kuzure-kami-shio-gatame"></div></article>
+<article class="card" data-grade="2" data-cat="ne" data-fam="osae"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Kuzure-gesa-gatame</h3><p class="sub">Osaekomi-waza</p></div><input type="checkbox" class="track" data-id="2-kuzure-gesa-gatame"></div></article>
+<article class="card" data-grade="2" data-cat="ne" data-fam="osae"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Kuzure-tate-shio-gatame</h3><p class="sub">Osaekomi-waza</p></div><input type="checkbox" class="track" data-id="2-kuzure-tate-shio-gatame"></div></article>
+<article class="card" data-grade="2" data-cat="ne" data-fam="osae"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Kuzure-yoko-shio-gatame</h3><p class="sub">Osaekomi-waza</p></div><input type="checkbox" class="track" data-id="2-kuzure-yoko-shio-gatame"></div></article>
+<article class="card" data-grade="2" data-cat="ne" data-fam="shime"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Sankaku-jime</h3><p class="sub">Shime-waza</p></div><input type="checkbox" class="track" data-id="2-sankaku-jime"></div></article>
+<article class="card" data-grade="2" data-cat="ne" data-fam="shime"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Kata-ha-jime</h3><p class="sub">Shime-waza</p></div><input type="checkbox" class="track" data-id="2-kata-ha-jime"></div></article>
+<article class="card" data-grade="2" data-cat="ne" data-fam="shime"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Kata-te-jime</h3><p class="sub">Shime-waza</p></div><input type="checkbox" class="track" data-id="2-kata-te-jime"></div></article>
+<article class="card" data-grade="2" data-cat="ne" data-fam="shime"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Sode-guruma-jime</h3><p class="sub">Shime-waza</p></div><input type="checkbox" class="track" data-id="2-sode-guruma-jime"></div></article>
+<article class="card" data-grade="2" data-cat="ne" data-fam="kansetsu"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Ude-hishigi-hiza-gatame</h3><p class="sub">Kansetsu-waza</p></div><input type="checkbox" class="track" data-id="2-ude-hishigi-hiza-gatame"></div></article>
+<article class="card" data-grade="2" data-cat="ne" data-fam="kansetsu"><div class="card-head"><div><span class="badge dan2">2e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Ude-hishigi-waki-gatame</h3><p class="sub">Kansetsu-waza</p></div><input type="checkbox" class="track" data-id="2-ude-hishigi-waki-gatame"></div></article>
+
+<!-- 3e DAN - NAGE -->
+<article class="card" data-grade="3" data-cat="nage" data-fam="koshi"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Utsuri-goshi</h3><p class="sub">Koshi-waza</p></div><input type="checkbox" class="track" data-id="3-utsuri-goshi"></div></article>
+<article class="card" data-grade="3" data-cat="nage" data-fam="koshi"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Ushiro-goshi</h3><p class="sub">Koshi-waza</p></div><input type="checkbox" class="track" data-id="3-ushiro-goshi"></div></article>
+<article class="card" data-grade="3" data-cat="nage" data-fam="te"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Sumi-otoshi</h3><p class="sub">Te-waza</p></div><input type="checkbox" class="track" data-id="3-sumi-otoshi"></div></article>
+<article class="card" data-grade="3" data-cat="nage" data-fam="te"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Kibisu-gaeshi</h3><p class="sub">Te-waza</p></div><input type="checkbox" class="track" data-id="3-kibisu-gaeshi"></div></article>
+<article class="card" data-grade="3" data-cat="nage" data-fam="te"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Uchi-mata-sukashi</h3><p class="sub">Te-waza</p></div><input type="checkbox" class="track" data-id="3-uchi-mata-sukashi"></div></article>
+<article class="card" data-grade="3" data-cat="nage" data-fam="te"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Sukui-nage</h3><p class="sub">Te-waza</p></div><input type="checkbox" class="track" data-id="3-sukui-nage"></div></article>
+<article class="card" data-grade="3" data-cat="nage" data-fam="te"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Yama-arashi</h3><p class="sub">Te-waza</p></div><input type="checkbox" class="track" data-id="3-yama-arashi"></div></article>
+<article class="card" data-grade="3" data-cat="nage" data-fam="te"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Seoi-otoshi</h3><p class="sub">Te-waza</p></div><input type="checkbox" class="track" data-id="3-seoi-otoshi"></div></article>
+<article class="card" data-grade="3" data-cat="nage" data-fam="ashi"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Haraï-tsurikomi-ashi</h3><p class="sub">Ashi-waza</p></div><input type="checkbox" class="track" data-id="3-harai-tsurikomi-ashi"></div></article>
+<article class="card" data-grade="3" data-cat="nage" data-fam="ashi"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>O-soto-guruma</h3><p class="sub">Ashi-waza</p></div><input type="checkbox" class="track" data-id="3-o-soto-guruma"></div></article>
+<article class="card" data-grade="3" data-cat="nage" data-fam="ashi"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>O-soto-gaeshi</h3><p class="sub">Ashi-waza</p></div><input type="checkbox" class="track" data-id="3-o-soto-gaeshi"></div></article>
+<article class="card" data-grade="3" data-cat="nage" data-fam="sutemi"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Soto-makikomi</h3><p class="sub">Sutemi-waza</p></div><input type="checkbox" class="track" data-id="3-soto-makikomi"></div></article>
+<article class="card" data-grade="3" data-cat="nage" data-fam="sutemi"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Harai-makikomi</h3><p class="sub">Sutemi-waza</p></div><input type="checkbox" class="track" data-id="3-harai-makikomi"></div></article>
+<article class="card" data-grade="3" data-cat="nage" data-fam="sutemi"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Yoko-wakare</h3><p class="sub">Sutemi-waza</p></div><input type="checkbox" class="track" data-id="3-yoko-wakare"></div></article>
+<article class="card" data-grade="3" data-cat="nage" data-fam="sutemi"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Yoko-otoshi</h3><p class="sub">Sutemi-waza</p></div><input type="checkbox" class="track" data-id="3-yoko-otoshi"></div></article>
+<article class="card" data-grade="3" data-cat="nage" data-fam="sutemi"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Tawara-gaeshi</h3><p class="sub">Sutemi-waza</p></div><input type="checkbox" class="track" data-id="3-tawara-gaeshi"></div></article>
+<article class="card" data-grade="3" data-cat="nage" data-fam="sutemi"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-nage">Nage-waza</span><h3>Daki-wakare</h3><p class="sub">Sutemi-waza</p></div><input type="checkbox" class="track" data-id="3-daki-wakare"></div></article>
+
+<!-- 3e DAN - NE -->
+<article class="card" data-grade="3" data-cat="ne" data-fam="osae"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Makura-gesa-gatame</h3><p class="sub">Osaekomi-waza</p></div><input type="checkbox" class="track" data-id="3-makura-gesa-gatame"></div></article>
+<article class="card" data-grade="3" data-cat="ne" data-fam="osae"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Kata-gatame</h3><p class="sub">Osaekomi-waza</p></div><input type="checkbox" class="track" data-id="3-kata-gatame"></div></article>
+<article class="card" data-grade="3" data-cat="ne" data-fam="shime"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Morote-jime</h3><p class="sub">Shime-waza</p></div><input type="checkbox" class="track" data-id="3-morote-jime"></div></article>
+<article class="card" data-grade="3" data-cat="ne" data-fam="shime"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Tsukkomi-jime</h3><p class="sub">Shime-waza</p></div><input type="checkbox" class="track" data-id="3-tsukkomi-jime"></div></article>
+<article class="card" data-grade="3" data-cat="ne" data-fam="shime"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Ashi-gatame-jime</h3><p class="sub">Shime-waza</p></div><input type="checkbox" class="track" data-id="3-ashi-gatame-jime"></div></article>
+<article class="card" data-grade="3" data-cat="ne" data-fam="shime"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Ryo-te-jime</h3><p class="sub">Shime-waza</p></div><input type="checkbox" class="track" data-id="3-ryo-te-jime"></div></article>
+<article class="card" data-grade="3" data-cat="ne" data-fam="kansetsu"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Ude-hishigi-ashi-gatame</h3><p class="sub">Kansetsu-waza</p></div><input type="checkbox" class="track" data-id="3-ude-hishigi-ashi-gatame"></div></article>
+<article class="card" data-grade="3" data-cat="ne" data-fam="kansetsu"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Ude-hishigi-sankaku-gatame</h3><p class="sub">Kansetsu-waza</p></div><input type="checkbox" class="track" data-id="3-ude-hishigi-sankaku-gatame"></div></article>
+<article class="card" data-grade="3" data-cat="ne" data-fam="kansetsu"><div class="card-head"><div><span class="badge dan3">3e Dan</span> <span class="badge b-ne">Ne-waza</span><h3>Ude-hishigi-hara-gatame</h3><p class="sub">Kansetsu-waza</p></div><input type="checkbox" class="track" data-id="3-ude-hishigi-hara-gatame"></div></article>
+</div>
+</div>
+
+<!-- ============================ UV3 SHIAI ============================ -->
+<div class="tab-content" id="content-shiai">
+<section class="intro">
+<h2>🏆 UV3 – Efficacité (Shiai)</h2>
+<p class="rule-shiai">Option <strong>Shiai</strong> : validation par <strong>100 points cumulés</strong> en relation grade-championnat ou en shiai/test d'efficacité (ou par 5 victoires consécutives totalisant au minimum 44 points en une seule compétition).</p>
+<p class="rule-combi">Option <strong>Efficacité combinée</strong> : <strong>partie A = 20 points attendus</strong> (points de compétition), plus la <strong>partie B</strong> à valider séparément.</p>
+<p>Barème sportif : victoire par <strong>ippon = 10 points</strong> ; victoire par <strong>waza-ari = 7 points</strong>.</p>
+</section>
+
+<div class="shiai-total">
+Total cumulé : <strong id="shiaiTotalValue">0</strong> points
+<span class="shiai-threshold" id="shiaiThreshold"></span>
+</div>
+
+<div class="uv3-mode">
+<strong>Option d'efficacité :</strong>
+<input type="radio" name="uv3mode" id="m-shiai" data-m="shiai" class="global-grade" checked><label for="m-shiai">Shiai (100 pts)</label>
+<input type="radio" name="uv3mode" id="m-combi" data-m="combi" class="global-grade"><label for="m-combi">Efficacité combinée</label>
+</div>
+
+<div id="combiBox">
+<div class="combi-row"><span>Partie A – Points de compétition</span><span id="combiA">0 / 20 pts</span></div>
+<div class="progress-track"><div class="progress-fill" id="combiFill"></div></div>
+<label class="combi-b"><input type="checkbox" id="exempt40Shiai"> <strong>J'ai 40 ans et plus</strong> – dispensé de la partie A (20 points)</label>
+<div class="combi-row"><span>Partie B</span><span id="combiB">Partie B non validée</span></div>
+<label class="combi-b"><input type="checkbox" id="partieB"> Partie B validée</label>
+<input type="text" id="partieBNote" placeholder="Détail partie B (date, juge, lieu…)">
+<p class="combi-note">Les modalités exactes de la partie B ne figurent pas dans ce suivi : vérifiez-les dans les Textes officiels.</p>
+</div>
+
+<div class="shiai-actions">
+<button class="btn-add" id="addShiaiRow">+ Ajouter une compétition</button>
+</div>
+
+<div class="shiai-table-wrap">
+<table class="shiai-table">
+<thead>
+<tr>
+<th style="width:130px">Date</th>
+<th>Lieu / Compétition</th>
+<th style="width:90px">Points</th>
+<th style="width:180px">Détail (optionnel)</th>
+<th style="width:50px"></th>
+</tr>
+</thead>
+<tbody id="shiaiBody">
+<tr><td><input type="date" data-f="date" value=""></td><td><input type="text" data-f="lieu" value="" placeholder="Championnat régional…"></td><td><input type="number" min="0" step="1" data-f="pts" value="0"></td><td><input type="text" data-f="note" value="" placeholder="1 ippon + 1 waza-ari"></td><td><button class="del-row" title="Supprimer">×</button></td></tr>
+<tr><td><input type="date" data-f="date" value=""></td><td><input type="text" data-f="lieu" value="" placeholder="Shiai / test efficacité…"></td><td><input type="number" min="0" step="1" data-f="pts" value="0"></td><td><input type="text" data-f="note" value="" placeholder=""></td><td><button class="del-row" title="Supprimer">×</button></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- ============================ UV4 COMMISSION ============================ -->
+<div class="tab-content" id="content-commission">
+<section class="intro">
+<h2>🤝 UV4 – Engagement personnel</h2>
+<p>Pour valider l'UV4, le candidat doit effectuer une <strong>demi-journée de stage ou de mise en situation</strong> (commissaire sportif ou arbitre) pour les 1er et 2e dan, et une <strong>journée complète</strong> pour les 3e et 4e dan. Les équivalences sont acceptées.</p>
+<small>Source : Textes Officiels 2026/2027 – Art. 3.1.1.</small>
+</section>
+
+<div class="commission-box">
+<h3>Suivi de la validation</h3>
+<p>Renseignez votre participation et cochez la case une fois l'UV4 validée par l'OTD (résultat remonté sur l'extranet).</p>
+<div class="commission-fields">
+<label><input type="checkbox" id="commCheck"> UV4 validée</label>
+<label>Type :
+<select id="commType">
+<option value="">— Choisir —</option>
+<option value="stage">Stage ou mise en situation</option>
+<option value="arbitre">Arbitre départemental en activité</option>
+<option value="commissaire">Commissaire sportif départemental</option>
+<option value="jeune-officiel">Coupe du jeune officiel</option>
+</select>
+</label>
+<label>Date : <input type="date" id="commDate"></label>
+</div>
+</div>
+</div>
+
+<footer>
+<p>Données extraites des Textes Officiels 2026/2027 de la FFJDA.</p>
+<p>Vérifiez toujours le texte officiel sur ffjudo.com avant l'examen.</p>
+</footer>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var mem = {};
+  var store;
+  try {
+    localStorage.setItem('__t__','1'); localStorage.removeItem('__t__');
+    store = { get:function(k){return localStorage.getItem(k);}, set:function(k,v){localStorage.setItem(k,v);}, del:function(k){localStorage.removeItem(k);} };
+  } catch(e){
+    store = { get:function(k){return mem[k]||null;}, set:function(k,v){mem[k]=v;}, del:function(k){delete mem[k];} };
+  }
+  function key(p, id){ return 'judo26-'+p+'-'+id; }
+
+  /* --- GESTION DES CONDITIONS D'ACCES --- */
+  var cGrade = document.getElementById('condGrade');
+  var cAnnee = document.getElementById('condAnneeNaissance');
+  var cDatePrev = document.getElementById('condDatePrecedent');
+  var cDateExam = document.getElementById('condDateExamen');
+  var cRes = document.getElementById('condResultats');
+
+  function calcAge(anneeNaissance, dateExamen) {
+    if(!anneeNaissance || !dateExamen) return 0;
+    var dExam = new Date(dateExamen);
+    return dExam.getFullYear() - anneeNaissance;
+  }
+
+  function calcDiffYears(datePrec, dateExam) {
+    if(!datePrec || !dateExam) return 0;
+    var d1 = new Date(datePrec);
+    var d2 = new Date(dateExam);
+    var diffTime = Math.abs(d2 - d1);
+    var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    return diffDays / 365.25;
+  }
+
+  function updateConditions() {
+    if(!cGrade || !cRes) return;
+    var g = cGrade.value;
+    var age = calcAge(cAnnee.value, cDateExam.value);
+    var delai = calcDiffYears(cDatePrev.value, cDateExam.value);
+    
+    var reqAge = 0, reqDelai = 0, gradePrec = "";
+    
+    if(g === "1") { reqAge = 15; reqDelai = 1; gradePrec = "ceinture marron"; }
+    if(g === "2") { reqAge = 17; reqDelai = 1; gradePrec = "1er dan"; }
+    if(g === "3") { reqAge = 20; reqDelai = 1; gradePrec = "2e dan"; }
+    if(g === "4") { reqAge = 24; reqDelai = 2; gradePrec = "3e dan"; }
+    
+    var text = "";
+    if(!cAnnee.value || !cDatePrev.value || !cDateExam.value) {
+      text = "<p>Remplissez tous les champs pour voir votre éligibilité.</p>";
+    } else {
+      text += "<p>Âge à l'examen : <strong>"+age+" ans</strong> (Requis : "+reqAge+" ans) "+(age>=reqAge?"✅":"❌")+"</p>";
+      text += "<p>Délai dans le grade précédent : <strong>"+delai.toFixed(1)+" ans</strong> (Requis : "+reqDelai+" an(s) de "+gradePrec+") "+(delai>=reqDelai?"✅":"❌")+"</p>";
+      
+      if(age>=reqAge && delai>=reqDelai) {
+        text += "<p style='color:var(--green);font-weight:bold;margin-top:.5rem'>✅ Vous êtes éligible à l'homologation sous réserve de valider les UV.</p>";
+      } else {
+        text += "<p style='color:var(--accent);font-weight:bold;margin-top:.5rem'>❌ Vous ne remplissez pas encore les conditions d'âge ou de délai.</p>";
+      }
+    }
+    cRes.innerHTML = text;
+  }
+
+  if(cGrade) {
+    cGrade.addEventListener('change', updateConditions);
+    cAnnee.addEventListener('input', updateConditions);
+    cDatePrev.addEventListener('change', updateConditions);
+    cDateExam.addEventListener('change', updateConditions);
+  }
+
+  /* --- GESTION DE LA BARRE DE MAÎTRISE UV2 (CUMULATIVE) --- */
+  var boxes = document.querySelectorAll('input.track');
+  var pText = document.getElementById('progressText');
+  var pFill = document.getElementById('progressFill');
+  var gradeRadios = document.querySelectorAll('input[name="techDan"]');
+
+  function updateProgress() {
+    var selectedGrade = 1; // Default
+    for (var i = 0; i < gradeRadios.length; i++) {
+      if (gradeRadios[i].checked) {
+        var val = gradeRadios[i].id.replace('tg-', '');
+        if (val === 'all') {
+          selectedGrade = 3; // Show all if 'all' is selected
+        } else if (val === '4') {
+          selectedGrade = 3; // 4e dan requires 1st, 2nd, 3rd dan tech
+        } else {
+          selectedGrade = parseInt(val);
+        }
+        break;
+      }
+    }
+
+    var total = 0;
+    var done = 0;
+
+    for (var i = 0; i < boxes.length; i++) {
+      var card = boxes[i].closest('.card');
+      var grade = parseInt(card.getAttribute('data-grade'));
+      
+      // Un 2e dan doit valider les techniques du 1er et du 2e. Un 3e du 1er, 2e et 3e.
+      if (grade <= selectedGrade) {
+        total++;
+        if (boxes[i].checked) done++;
+      }
+    }
+
+    if(pText) pText.textContent = done + ' / ' + total + ' techniques validées';
+    if(pFill) pFill.style.width = (total > 0 ? (done / total * 100) : 0) + '%';
+  }
+
+  for(var i=0;i<boxes.length;i++){
+    (function(cb){
+      var k = key('tech', cb.getAttribute('data-id'));
+      if(store.get(k)==='1'){ cb.checked = true; var c=cb.closest('.card'); if(c) c.classList.add('done'); }
+      cb.addEventListener('change', function(){
+        var c = cb.closest('.card');
+        if(cb.checked){ store.set(k,'1'); if(c) c.classList.add('done'); }
+        else { store.del(k); if(c) c.classList.remove('done'); }
+        updateProgress();
+      });
+    })(boxes[i]);
+  }
+
+  // Mettre à jour la barre quand on change de grade
+  for(var i=0; i<gradeRadios.length; i++) {
+    gradeRadios[i].addEventListener('change', updateProgress);
+  }
+  
+  updateProgress(); // Init
+
+  var techDate = document.getElementById('techDate');
+  if(techDate){
+    var v = store.get(key('date','uv2')); if(v) techDate.value = v;
+    techDate.addEventListener('change', function(){ store.set(key('date','uv2'), techDate.value); });
+  }
+
+  var cRadios = document.querySelectorAll('input[name="c"]');
+  for(var i=0;i<cRadios.length;i++){
+    cRadios[i].addEventListener('change', function(){
+      var a = document.querySelectorAll('input[name="f-nage"]');
+      var b = document.querySelectorAll('input[name="f-ne"]');
+      for(var j=0;j<a.length;j++) a[j].checked = false;
+      for(var j=0;j<b.length;j++) b[j].checked = false;
+    });
+  }
+
+  /* --- GESTION UV1 (KATA) --- */
+  var kataBoxes = document.querySelectorAll('.kata-track');
+  for(var i=0;i<kataBoxes.length;i++){
+    (function(cb){
+      var k = key('kata', cb.getAttribute('data-id'));
+      if(store.get(k)==='1'){ cb.checked = true; var c=cb.closest('.kata-card'); if(c) c.classList.add('done'); }
+      cb.addEventListener('change', function(){
+        var c = cb.closest('.kata-card');
+        if(cb.checked){ store.set(k,'1'); if(c) c.classList.add('done'); }
+        else { store.del(k); if(c) c.classList.remove('done'); }
+      });
+    })(kataBoxes[i]);
+  }
+  var kataDate = document.getElementById('kataDate');
+  if(kataDate){
+    var v = store.get(key('date','uv1')); if(v) kataDate.value = v;
+    kataDate.addEventListener('change', function(){ store.set(key('date','uv1'), kataDate.value); });
+  }
+  var exempt40Kata = document.getElementById('exempt40Kata');
+  if(exempt40Kata) {
+    if(store.get(key('uv1','exempt40'))==='1') exempt40Kata.checked = true;
+    exempt40Kata.addEventListener('change', function(){ 
+      if(exempt40Kata.checked) store.set(key('uv1','exempt40'),'1');
+      else store.del(key('uv1','exempt40'));
+    });
+  }
+
+  /* --- GESTION UV3 (SHIAI) --- */
+  var shiaiBody = document.getElementById('shiaiBody');
+  var shiaiTotal = document.getElementById('shiaiTotalValue');
+  var shiaiThresh = document.getElementById('shiaiThreshold');
+  var btnAdd = document.getElementById('addShiaiRow');
+  var exempt40Shiai = document.getElementById('exempt40Shiai');
+
+  if(exempt40Shiai) {
+    if(store.get(key('uv3','exempt40'))==='1') exempt40Shiai.checked = true;
+    exempt40Shiai.addEventListener('change', function(){ 
+      if(exempt40Shiai.checked) store.set(key('uv3','exempt40'),'1');
+      else store.del(key('uv3','exempt40'));
+      updateTotal();
+    });
+  }
+
+  function rowsToData(){
+    var data = [];
+    var trs = shiaiBody.querySelectorAll('tr');
+    for(var i=0;i<trs.length;i++){
+      var tr = trs[i];
+      var d = tr.querySelector('input[data-f="date"]');
+      var l = tr.querySelector('input[data-f="lieu"]');
+      var p = tr.querySelector('input[data-f="pts"]');
+      var n = tr.querySelector('input[data-f="note"]');
+      if(!d && !l && !p && !n) continue;
+      data.push({
+        date: d ? d.value : '',
+        lieu: l ? l.value : '',
+        pts: p ? (Number(p.value)||0) : 0,
+        note: n ? n.value : ''
+      });
+    }
+    return data;
+  }
+
+  function saveShiai(){
+    try { store.set(key('shiai','data'), JSON.stringify(rowsToData())); } catch(e){}
+  }
+
+  function updateTotal(){
+    var data = rowsToData();
+    var t = 0;
+    for(var i=0;i<data.length;i++) t += Number(data[i].pts)||0;
+    if(shiaiTotal) shiaiTotal.textContent = t;
+    var mC = document.getElementById('m-combi');
+    var combi = !!(mC && mC.checked);
+    var exempt = !!(exempt40Shiai && exempt40Shiai.checked);
+    var pB = document.getElementById('partieB');
+    var bOk = !!(pB && pB.checked);
+    var aOk = exempt || t >= 20;
+    if(combi){
+      var cA = document.getElementById('combiA');
+      var cF = document.getElementById('combiFill');
+      var cB = document.getElementById('combiB');
+      if(cA) cA.textContent = exempt ? 'Dispensé (40 ans et +)' : Math.min(t,20) + ' / 20 pts';
+      if(cF) cF.style.width = (exempt ? 100 : Math.min(t/20,1)*100) + '%';
+      if(cB) cB.textContent = bOk ? '✓ Partie B validée' : 'Partie B non validée';
+      if(shiaiThresh){
+        if(aOk && bOk){ shiaiThresh.textContent = '✓ Efficacité combinée validée'; shiaiThresh.style.color = 'var(--green)'; }
+        else if(aOk){ shiaiThresh.textContent = 'Partie A ✓ – reste la partie B'; shiaiThresh.style.color = 'var(--accent)'; }
+        else { shiaiThresh.textContent = (20 - t) + ' points restants en partie A'; shiaiThresh.style.color = 'var(--accent)'; }
+      }
+    } else if(shiaiThresh){
+      shiaiThresh.textContent = t >= 100 ? '✓ Validé par points' : (100 - t) + ' points restants';
+      shiaiThresh.style.color = 'var(--green)';
+    }
+  }
+
+  function appendRow(data){
+    var tr = document.createElement('tr');
+    var safeLieu = String((data&&data.lieu)||'').replace(/"/g,'&quot;');
+    var safeNote = String((data&&data.note)||'').replace(/"/g,'&quot;');
+    tr.innerHTML =
+      '<td><input type="date" data-f="date" value="'+((data&&data.date)||'')+'"></td>'+
+      '<td><input type="text" data-f="lieu" value="'+safeLieu+'" placeholder="Compétition…"></td>'+
+      '<td><input type="number" min="0" step="1" data-f="pts" value="'+((data&&Number(data.pts))||0)+'"></td>'+
+      '<td><input type="text" data-f="note" value="'+safeNote+'" placeholder="Détail"></td>'+
+      '<td><button class="del-row" title="Supprimer">×</button></td>';
+    shiaiBody.appendChild(tr);
+  }
+
+  if(shiaiBody){
+    var saved = [];
+    try {
+      var rawS = store.get(key('shiai','data'));
+      if(rawS) saved = JSON.parse(rawS) || [];
+    } catch(e){ saved = []; }
+    if(Array.isArray(saved) && saved.length > 0){
+      var trs = shiaiBody.querySelectorAll('tr');
+      for(var i=0;i<saved.length;i++){
+        if(i < trs.length){
+          var tr = trs[i];
+          tr.querySelector('input[data-f="date"]').value = saved[i].date || '';
+          tr.querySelector('input[data-f="lieu"]').value = saved[i].lieu || '';
+          tr.querySelector('input[data-f="pts"]').value = Number(saved[i].pts)||0;
+          tr.querySelector('input[data-f="note"]').value = saved[i].note || '';
+        } else {
+          appendRow(saved[i]);
+        }
+      }
+    }
+    updateTotal();
+    shiaiBody.addEventListener('input', function(e){
+      var t = e.target;
+      if(t && t.tagName === 'INPUT'){ saveShiai(); updateTotal(); }
+    });
+    shiaiBody.addEventListener('click', function(e){
+      var t = e.target;
+      if(t && t.classList && t.classList.contains('del-row')){
+        var tr = t.closest('tr');
+        if(tr) tr.parentNode.removeChild(tr);
+        saveShiai();
+        updateTotal();
+      }
+    });
+  }
+
+  if(btnAdd){
+    btnAdd.addEventListener('click', function(){
+      appendRow({date:'', lieu:'', pts:0, note:''});
+      saveShiai();
+      updateTotal();
+    });
+  }
+
+  /* --- PRÉ-REMPLISSAGE DES GRADES SELON LES CONDITIONS D'ACCÈS --- */
+  function applyGrade(g){
+    var k = document.getElementById('dan-' + g);
+    if(k) k.checked = true;
+    var t = document.getElementById('tg-' + g);
+    if(t) t.checked = true;
+    updateProgress();
+  }
+  if(cGrade){
+    var sg = store.get(key('cond','grade'));
+    if(sg) cGrade.value = sg;
+    cGrade.addEventListener('change', function(){
+      store.set(key('cond','grade'), cGrade.value);
+      applyGrade(cGrade.value);
+    });
+    applyGrade(cGrade.value);
+  }
+
+  /* --- UV3 : MODE SHIAI / EFFICACITÉ COMBINÉE --- */
+  var modeRadios = document.querySelectorAll('input[name="uv3mode"]');
+  var savedMode = store.get(key('uv3','mode'));
+  for(var mi=0; mi<modeRadios.length; mi++){
+    if(modeRadios[mi].getAttribute('data-m') === savedMode) modeRadios[mi].checked = true;
+    modeRadios[mi].addEventListener('change', function(){
+      store.set(key('uv3','mode'), this.getAttribute('data-m'));
+      updateTotal();
+    });
+  }
+  var pBox = document.getElementById('partieB');
+  if(pBox){
+    if(store.get(key('uv3','partieB')) === '1') pBox.checked = true;
+    pBox.addEventListener('change', function(){
+      if(pBox.checked) store.set(key('uv3','partieB'), '1'); else store.del(key('uv3','partieB'));
+      updateTotal();
+    });
+  }
+  var pBNote = document.getElementById('partieBNote');
+  if(pBNote){
+    var nv = store.get(key('uv3','partieBNote')); if(nv) pBNote.value = nv;
+    pBNote.addEventListener('input', function(){ store.set(key('uv3','partieBNote'), pBNote.value); });
+  }
+  updateTotal();
+
+  /* --- VIDÉOS YOUTUBE UV2 : lien par technique --- */
+  // Pour une vidéo précise, ajouter l'identifiant YouTube ici, ex. 'nom-de-la-technique' : 'ID'
+  var YT_OVERRIDE = {};
+  var grid = document.getElementById('grid');
+  if(grid){
+    var arts = grid.querySelectorAll('.card');
+    for(var ai=0; ai<arts.length; ai++){
+      (function(card){
+        var h = card.querySelector('h3');
+        var cb = card.querySelector('input.track');
+        var name = h ? h.textContent.trim() : '';
+        var id = cb ? cb.getAttribute('data-id') : '';
+        var a = document.createElement('a');
+        a.className = 'yt-link';
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.href = YT_OVERRIDE[id]
+          ? 'https://youtu.be/' + YT_OVERRIDE[id]
+          : 'https://www.youtube.com/results?search_query=' + encodeURIComponent('judo ' + name);
+        a.textContent = '▶ Vidéo';
+        card.appendChild(a);
+      })(arts[ai]);
+    }
+  }
+
+  /* --- VIDÉOS DE RÉFÉRENCE UV1 (KATA) --- */
+  var KATA_VIDEOS = {
+    '1-nnk-tori':        'bA_XnjxyMiI', // Nage-no-kata
+    '1-nnk-uke':         'bA_XnjxyMiI', // Nage-no-kata
+    '2-nnk-tori':        'bA_XnjxyMiI', // Nage-no-kata
+    '3-knk-complet':     'LZlGWrL6ceQ', // Katame-no-kata (démo de référence)
+    '3-knk-kime-complet':'BvxJYM_LsHw', // Kime-no-kata
+    '4-jnk-tori':        'YMDNh2NCQ8E'  // Ju-no-kata (Masters 2006, sans commentaire)
+  };
+  var kataCards = document.querySelectorAll('.kata-card');
+  for(var ki=0; ki<kataCards.length; ki++){
+    (function(card){
+      var cb = card.querySelector('input.kata-track');
+      var id = cb ? cb.getAttribute('data-id') : '';
+      if(!KATA_VIDEOS[id]) return;
+      var a = document.createElement('a');
+      a.className = 'yt-link';
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.href = 'https://youtu.be/' + KATA_VIDEOS[id];
+      a.textContent = '▶ Vidéo de référence';
+      card.appendChild(a);
+    })(kataCards[ki]);
+  }
+
+  /* --- SAUVEGARDE / RESTAURATION PAR FICHIER JSON --- */
+  var APP_ID = 'judo-suivi-dan';
+  var usingLocal = true;
+  try { localStorage.setItem('__t2__','1'); localStorage.removeItem('__t2__'); } catch(e){ usingLocal = false; }
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+  function allKeys(){
+    var out = [];
+    if(usingLocal){ for(var i=0; i<localStorage.length; i++) out.push(localStorage.key(i)); }
+    else { out = Object.keys(mem); }
+    return out.filter(function(k){ return k.indexOf('judo26-') === 0; });
+  }
+
+  var stEl = document.getElementById('storageStatus');
+  if(stEl){
+    if(usingLocal){
+      stEl.textContent = '✓ Sauvegarde automatique dans ce navigateur. Exportez un fichier pour le garder ailleurs.';
+    } else {
+      stEl.textContent = '⚠ Stockage du navigateur indisponible : les données ne seront pas conservées. Exportez la sauvegarde avant de fermer.';
+      stEl.className = 'backup-status warn';
+    }
+  }
+
+  var btnExport = document.getElementById('btnExport');
+  var exportPanel = document.getElementById('exportPanel');
+  var exportText = document.getElementById('exportText');
+  var exportMsg = document.getElementById('exportMsg');
+  var btnDownload = document.getElementById('btnDownload');
+  var btnCopy = document.getElementById('btnCopy');
+  var btnCloseExport = document.getElementById('btnCloseExport');
+
+  function buildBackup(){
+    var donnees = {};
+    allKeys().forEach(function(k){ donnees[k] = store.get(k); });
+    return JSON.stringify({ app: APP_ID, version: 1, exporte_le: new Date().toISOString(), donnees: donnees }, null, 2);
+  }
+  function nomFichier(){
+    var d = new Date();
+    return 'judo_suivi_dan_sauvegarde_' + d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()) + '.json';
+  }
+
+  if(btnExport && exportPanel){
+    btnExport.addEventListener('click', function(){
+      try {
+        exportText.value = buildBackup();
+        exportMsg.textContent = 'Sauvegarde prête (' + allKeys().length + ' éléments). Cliquez sur « Télécharger le fichier », ou copiez le texte si le téléchargement est bloqué.';
+        exportPanel.style.display = 'block';
+      } catch(e){
+        alert('Erreur lors de la préparation de la sauvegarde : ' + e.message);
+      }
+    });
+  }
+
+  if(btnDownload){
+    btnDownload.addEventListener('click', function(){
+      var txt = exportText.value;
+      try {
+        var blob = new Blob([txt], { type: 'application/json' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = nomFichier();
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(function(){ URL.revokeObjectURL(url); }, 2000);
+      } catch(e){
+        // Repli : lien de données (fonctionne dans certains aperçus qui bloquent les blobs)
+        var a2 = document.createElement('a');
+        a2.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(txt);
+        a2.download = nomFichier();
+        document.body.appendChild(a2);
+        a2.click();
+        a2.remove();
+      }
+      exportMsg.textContent = 'Si rien ne se télécharge, utilisez « Copier le texte » puis collez-le dans un fichier nommé judo_suivi_dan_sauvegarde.json.';
+    });
+  }
+
+  if(btnCopy){
+    btnCopy.addEventListener('click', function(){
+      exportText.focus();
+      exportText.select();
+      exportText.setSelectionRange(0, exportText.value.length);
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch(e){ ok = false; }
+      if(!ok && navigator.clipboard){
+        navigator.clipboard.writeText(exportText.value).then(function(){ exportMsg.textContent = '✓ Texte copié. Collez-le dans un fichier .json.'; }, function(){ exportMsg.textContent = 'Copie impossible : sélectionnez le texte à la main (Ctrl+A puis Ctrl+C).'; });
+      } else {
+        exportMsg.textContent = ok ? '✓ Texte copié. Collez-le dans un fichier .json.' : 'Copie impossible : sélectionnez le texte à la main (Ctrl+A puis Ctrl+C).';
+      }
+    });
+  }
+
+  if(btnCloseExport && exportPanel){
+    btnCloseExport.addEventListener('click', function(){ exportPanel.style.display = 'none'; });
+  }
+
+  var btnImport = document.getElementById('btnImport');
+  var fileImport = document.getElementById('fileImport');
+  if(btnImport && fileImport){
+    btnImport.addEventListener('click', function(){ fileImport.click(); });
+    fileImport.addEventListener('change', function(){
+      var f = fileImport.files && fileImport.files[0];
+      if(!f) return;
+      var reader = new FileReader();
+      reader.onload = function(){
+        var payload;
+        try { payload = JSON.parse(reader.result); }
+        catch(e){ alert('Fichier illisible (JSON invalide).'); fileImport.value = ''; return; }
+        if(!payload || payload.app !== APP_ID || !payload.donnees || typeof payload.donnees !== 'object'){
+          alert("Ce fichier n'est pas une sauvegarde de ce suivi.");
+          fileImport.value = '';
+          return;
+        }
+        var date = payload.exporte_le ? new Date(payload.exporte_le).toLocaleString('fr-FR') : 'date inconnue';
+        if(!confirm('Remplacer les données actuelles par la sauvegarde du ' + date + ' ?')){
+          fileImport.value = '';
+          return;
+        }
+        allKeys().forEach(function(k){ store.del(k); });
+        Object.keys(payload.donnees).forEach(function(k){
+          var v = payload.donnees[k];
+          if(k.indexOf('judo26-') === 0 && typeof v === 'string') store.set(k, v);
+        });
+        location.reload();
+      };
+      reader.readAsText(f);
+    });
+  }
+
+  /* --- VIDÉOS INSTAGRAM UV2 (PRISES) : lien par technique --- */
+  // Pour une publication précise, ajouter son URL ici, ex. 'nom-de-la-prise' : 'https://www.instagram.com/p/XXXX/'
+  var IG_OVERRIDE = {};
+  var igGrid = document.getElementById('grid');
+  if(igGrid){
+    var igCards = igGrid.querySelectorAll('.card');
+    for(var gi=0; gi<igCards.length; gi++){
+      (function(card){
+        var h = card.querySelector('h3');
+        var cb = card.querySelector('input.track');
+        var name = h ? h.textContent.trim() : '';
+        var id = cb ? cb.getAttribute('data-id') : '';
+        var tag = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+        var a = document.createElement('a');
+        a.className = 'ig-link';
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.href = IG_OVERRIDE[id] || ('https://www.instagram.com/explore/tags/' + tag + '/');
+        a.textContent = '📷 Instagram';
+        card.appendChild(a);
+      })(igCards[gi]);
+    }
+  }
+
+  /* --- GESTION UV4 (COMMISSION) --- */
+  var commCheck = document.getElementById('commCheck');
+  var commDate = document.getElementById('commDate');
+  var commType = document.getElementById('commType');
+  if(commCheck){
+    if(store.get(key('uv4','done'))==='1') commCheck.checked = true;
+    commCheck.addEventListener('change', function(){
+      if(commCheck.checked) store.set(key('uv4','done'),'1');
+      else store.del(key('uv4','done'));
+    });
+  }
+  if(commDate){
+    var v = store.get(key('uv4','date')); if(v) commDate.value = v;
+    commDate.addEventListener('change', function(){ store.set(key('uv4','date'), commDate.value); });
+  }
+  if(commType){
+    var v = store.get(key('uv4','type')); if(v) commType.value = v;
+    commType.addEventListener('change', function(){ store.set(key('uv4','type'), commType.value); });
+  }
+})();
+</script>
+</body>
+</html>
