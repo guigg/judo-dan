@@ -303,8 +303,8 @@ body:has(#tg-all:checked) #uv2-all{display:block}
 .shiai-list{display:grid;gap:.5rem;margin:0 0 .3rem}
 .shiai-row{
   position:relative;display:grid;gap:.5rem;
-  grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);
-  grid-template-areas:"date pts" "lieu lieu" "note note";
+  grid-template-columns:minmax(0,1fr);
+  grid-template-areas:"date" "pts" "lieu" "note";
   padding:.7rem .8rem;border-radius:16px;
   background:rgba(255,255,255,.055);border:1px solid var(--hair);box-shadow:var(--shadow);
   touch-action:pan-y;
@@ -316,10 +316,14 @@ body:has(#tg-all:checked) #uv2-all{display:block}
 .shiai-row .f-pts{grid-area:pts}
 .shiai-row .f-lieu{grid-area:lieu}
 .shiai-row .f-note{grid-area:note}
+.shiai-row .f-pts input{max-width:140px}
 .shiai-row input{min-width:0;touch-action:pan-y}
 .shiai-row.swiping{transition:none;background:rgba(207,41,10,.14);border-color:rgba(207,41,10,.38);user-select:none}
 .shiai-row.row-ok{background:linear-gradient(180deg,rgba(74,222,128,.16),rgba(255,255,255,.03));border-color:rgba(74,222,128,.35)}
 .swipe-hint{margin:.1rem 0 .9rem;font-size:.64rem;color:var(--faint);text-align:center}
+@media (min-width:700px){
+  .shiai-row{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);grid-template-areas:"date pts" "lieu lieu" "note note"}
+}
 .shiai-warning{margin:0 0 .8rem;padding:.85rem;font-size:.76rem;color:#ffcf8a;border-color:rgba(255,170,60,.3);background:rgba(255,170,60,.12)}
 .shiai-warning strong{color:#ffb26b}
 
